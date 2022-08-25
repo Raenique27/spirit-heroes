@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booze Buddy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigin="anonymous"> <!--Foundation CSS-->
-    <link rel="custom stylesheet" src="./Assets/css/style.css"> <!--Custom Css-->
+    <link rel="custom stylesheet" href="./Assets/css/style.css"> <!--Custom Css-->
 </head>
 <body>
     <header>
-        <h1>Booze Buddy</h1>
+        <h1>Booze Buddy!</h1>
         <nav>
-            <ul>
-                <li>
-                    <a href="#Search-by-ingredients">Ingredients</a>
-                </li>
+            <ul class="menu align-right">
                 <li>
                     <a href="#drink-name">Drink Name</a>
+                </li>
+                <li>
+                    <a href="#ingredients">Ingredients</a>
                 </li>
                 <li>
                     <a href="#non-alcoholic">Non Alcoholic</a>
@@ -27,37 +27,49 @@
     </header>
 
     <main>
-        <section>
-            <div class="drinks-w/-ingredients">
-                <h2 class="subtitle-1"><span id="drink-search-term"></span></h2>
+        <section id="drink-name">
+            <div class="drink-name-form">
+                <h2 class="subtitle-1"><span id="drink-name-header"></span></h2>
+                <form>
+                    <input type="text" placeholder="Search by Drink Name">
+                    <button type="submit" name="drink-name-search-button">Search</button>
+                </form>
             </div>
-            <div class="search-bar-1">
-                <input type="text" placeholder="Ingredient">
-            </div>
-        </section>
-
-        <section>
-            <div class="drinks-w/-ingredients">
-                <h2 class="subtitle-2"><span id="drink-search-term"></span></h2>
-            </div>
-            <div class="search-bar-2">
-                <input type="text" placeholder="Name">
+            <div class="drink-name-results">
+                
             </div>
         </section>
 
-        <section>
-            <div class="drinks-w/-ingredients">
-                <h2 class="subtitle-3"><span id="drink-search-term"></span></h2>
+        <section id="ingredients">
+            <div class="ingredients-form">
+                <h2 class="subtitle-2"><span id="ingredients-header"></span></h2>
+                <form>
+                    <input type="text" placeholder="Search by Ingredient">
+                    <button type="submit" name="ingredients-search-button">Search</button>
+                </form>
             </div>
-            <div class="search-bar-3">
-                <input type="text" placeholder="Non Alcoholic">
+            <div class="ingredients-results">
+                
+            </div>
+        </section>
+
+        <section id="non-alcoholic">
+            <div class="non-aloholic-form">
+                <h2 class="subtitle-3"><span id="non-alcoholic-header"></span></h2>
+                <form>
+                    <input type="text" placeholder="Search Non-Alcoholic">
+                    <button type="submit" name="non-alcoholic-search-button">Search</button>
+                </form>
+            </div>
+            <div class="non-alcoholic-results">
+                
             </div>
         </section>
 
     </main>
 
     <footer>
-        <h2>Made by the Spirit Heroes. "For every Hero, there's a Spirit!"</h2>
+        <h5>Made by the Spirit Heroes. "For every Hero, there's a Spirit!"</h5>
     </footer>
 
 
