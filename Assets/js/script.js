@@ -3,7 +3,7 @@ var ingredientInputEl = document.querySelector("#ingredient-input");
 var ingredientButton = document.getElementById("ingredient-button");
 
 // api call by drink ingredient
-var getDrinkNameInfo = function(drinkIngredient) { 
+var drinkIngredientInfo = function(drinkIngredient) { 
     var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient  + "";
   
     // make fetch request
