@@ -2,26 +2,15 @@ var ingredientsFormEl = document.getElementById("ingredients-form");
 var ingredientsInputEl = document.querySelector("#ingredients-submission");
 var ingredientButton = document.getElementById("ingredient-button");
 
-
-var getcocktailIngredient = function(ingredient) {
-    // format the cocktail api/url
-    var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka";
+// api call by drink ingredient
+var getDrinkNameInfo = function(drinkIngredient) { 
+    var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient  + "";
   
-    // make a fetch request to url
+    // make fetch request
     fetch(apiUrl)
-        .then(function(response) {
-        // if the request worked
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function(data) {
-                    console.log(data);
-                });
-            } else {
-                console.log('Error: Cocktail Ingredient Not Found');
-            }
-        })
-        .catch(function(error) {
-            console.log("Unable to connect to thecocktaildb.com");
-        });
+    .then(function(response) {
+        console.log(response);
+        return response.json();
+    })
 };
-getcocktailIngredient();
+getDrinkNameInfo();
