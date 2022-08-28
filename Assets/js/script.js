@@ -1,27 +1,11 @@
-var ingredientFormEl = document.querySelector("#ingredient-form");
-var ingedientInputEl = document.querySelector("#ingredient-name");
+var ingredientsFormEl = document.getElementById("ingredients-form");
+var ingredientsInputEl = document.querySelector("#ingredients-submission");
+var ingredientButton = document.getElementById("ingredient-button");
 
-// var drinkNameByIngredient = function() {
-//     var apiUrl = "https://thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka";
-
-//     fetch(apiUrl).then(function(response) {
-//         response.json().then(function(data) {
-//             console.log(data);
-//         });
-//     });
-// };
-// drinkNameByIngredient();
-
-// var formSubmitHandler = function(event) {
-//     event.preventDefault();
-//     var ingredientName =
-//     console.log(event);
-// };
-// ingredientFormEl.addEventListener("submit", formSubmitHandler);
 
 var getcocktailIngredient = function(ingredient) {
     // format the cocktail api/url
-    var apiUrl = "https://thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka";
+    var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka";
   
     // make a fetch request to url
     fetch(apiUrl)
