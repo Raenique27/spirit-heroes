@@ -1,5 +1,5 @@
-var ingredientsFormEl = document.getElementById("ingredients-form");
-var ingredientsInputEl = document.querySelector("#ingredients-submission");
+var ingredientFormEl = document.getElementById("ingredient-form");
+var ingredientInputEl = document.querySelector("#ingredient-input");
 var ingredientButton = document.getElementById("ingredient-button");
 
 // api call by drink ingredient
@@ -12,5 +12,17 @@ var getDrinkNameInfo = function(drinkIngredient) {
         console.log(response);
         return response.json();
     })
+    .then(function(data) {
+        console.log(data);
+        showDrinkIngredients(data, drinkIngredient);
+    });
+};
+
+var showDrinkIngredients = function(ingredients) {
+    // find out is the api returned any drinks
+    if (ingredients.length === 0) {
+      console.log("yay");
+      return;
+    }
 };
 getDrinkNameInfo();
