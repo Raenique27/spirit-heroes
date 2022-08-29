@@ -52,43 +52,55 @@ var displayDrinkNameResults = function(drinkName, data) {
     drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
 
     var drinkDataIngredientsFinal = [];
-
-    var filterIngredients = function() {
-        var drinkData = data.drinks[0];
-        console.log(drinkData);
-        var drinkDataIngredients = [{
-            "Ingredient1": drinkData.strMeasure1 + " " + drinkData.strIngredient1 ,
-            "Ingredient2": drinkData.strMeasure2 + " " + drinkData.strIngredient2 ,
-            "Ingredient3": drinkData.strMeasure3 + " " + drinkData.strIngredient3 , 
-            "Ingredient4": drinkData.strMeasure4 + " " + drinkData.strIngredient4 , 
-            "Ingredient5": drinkData.strMeasure5 + " " + drinkData.strIngredient5 , 
-            "Ingredient6": drinkData.strMeasure6 + " " + drinkData.strIngredient6 ,
-            "Ingredient7": drinkData.strMeasure7 + " " + drinkData.strIngredient7 ,
-            "Ingredient8": drinkData.strMeasure8 + " " + drinkData.strIngredient8 ,
-            "Ingredient9": drinkData.strMeasure9 + " " + drinkData.strIngredient9 ,
-            "Ingredient10": drinkData.strMeasure10 + " " + drinkData.strIngredient10 ,
-            "Ingredient11": drinkData.strMeasure11 + " " + drinkData.strIngredient11 ,
-            "Ingredient12": drinkData.strMeasure12 + " " + drinkData.strIngredient12 ,
-            "Ingredient13": drinkData.strMeasure13 + " " + drinkData.strIngredient13 ,
-            "Ingredient14": drinkData.strMeasure14 + " " + drinkData.strIngredient14 ,
-            "Ingredient15": drinkData.strMeasure15 + " " + drinkData.strIngredient15       
+    var drinkData = data.drinks[0];
+    console.log(drinkData);
+    var drinkDataIngredients = [{
+        "Ingredient1": drinkData.strMeasure1  + drinkData.strIngredient1 ,
+        "Ingredient2": drinkData.strMeasure2  + drinkData.strIngredient2 ,
+        "Ingredient3": drinkData.strMeasure3  + drinkData.strIngredient3 , 
+        "Ingredient4": drinkData.strMeasure4  + drinkData.strIngredient4 , 
+        "Ingredient5": drinkData.strMeasure5  + drinkData.strIngredient5 , 
+        "Ingredient6": drinkData.strMeasure6  + drinkData.strIngredient6 ,
+        "Ingredient7": drinkData.strMeasure7  + drinkData.strIngredient7 ,
+        "Ingredient8": drinkData.strMeasure8  + drinkData.strIngredient8 ,
+        "Ingredient9": drinkData.strMeasure9  + drinkData.strIngredient9 ,
+        "Ingredient10": drinkData.strMeasure10  + drinkData.strIngredient10 ,
+        "Ingredient11": drinkData.strMeasure11  + drinkData.strIngredient11 ,
+        "Ingredient12": drinkData.strMeasure12  + drinkData.strIngredient12 ,
+        "Ingredient13": drinkData.strMeasure13  + drinkData.strIngredient13 ,
+        "Ingredient14": drinkData.strMeasure14  + drinkData.strIngredient14 ,
+        "Ingredient15": drinkData.strMeasure15  + drinkData.strIngredient15       
         }];
+    var filterIngredients = function() {
+       
         console.log(drinkDataIngredients);
-        for (let i=0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
-            if (drinkDataIngredients[i].value !== "0" || drinkDataIngredients[i].value !== "null null" ) {
-                drinkDataIngredientsFinal.push(drinkDataIngredients[i]);// still returning all objects instead of selected. help pls
-            }
-        }
+        // for (let i=0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
+        //     if (drinkDataIngredients[i].value !== "0" || drinkDataIngredients[i].value !== "null null" ) {
+        //         drinkDataIngredientsFinal.push(drinkDataIngredients[i]);// still returning all objects instead of selected. help pls
+        //     }
+        // }
+        // drinkDataIngredients.forEach(Object =>{ // need to get rid of ingredient objects that have an invalid value
+        //     if (Object.value  === 0) {
+        //         delete Object;
+                
+        //     }
+        // });
+        drinkDataIngredients = drinkDataIngredients.filter(function(value) {
+            return value !== 0, null, Number;
+
+        });
+        console.log(drinkDataIngredients);
         console.log(drinkDataIngredientsFinal);
     }
     filterIngredients();
 
-    drinkDataIngredientsFinal.forEach(function(object) {  // for each object with a valid ingredient, create a list element
+    drinkDataIngredients.forEach(function(Object) {  // for each object with a valid ingredient, create a list element
+        console.log(Object);
         var ingredientsEl = document.createElement("li");
-        ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + object.value + "'>" + object.value + "</li>" // returning as undefined. help pls
+        ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + Object.value + "'>" + Object.value + "</li>" // returning as undefined. help pls
         drinkNameIngredientsListEl.append(ingredientsEl);
-    });
-    
+    }); 
+     
 }
 
 var drinkNameHandler = function(event) {  //submission handler for search by drink name
@@ -105,5 +117,6 @@ var drinkNameHandler = function(event) {  //submission handler for search by dri
         // create a modal for error
     }
 }
+
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
