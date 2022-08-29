@@ -18,7 +18,7 @@ var formSubmitHandler = function(event) {
     }
 }
 
-// api call by drink ingredient
+// api call by drink ingredien
 var drinkIngredientInfo = function(drinkIngredient) { 
     var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient  + "";
   
@@ -41,6 +41,40 @@ var showDrinkIngredients = function(ingredients) {
 
 
 // Search by drink name section
+var drinkNameFormEl = document.getElementById("drink-name-form");
+var drinkNameInputEl = document.querySelector("#drink-name-submission");
+var drinkNameButton = document.getElementById("drink-name-button");
+
+var getDrinkNameInfo = function(drinkName) { //api call for drink name
+    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data)  {
+        console.log(data);
+        displayDrinkNameResults(drinkName, data);
+        // save drinkName to localstorage
+        var savedDrinkNames = JSON.parse(localStorage.getItem("drink names")); // load saves to compare existing values w/ values yet to exist
+        if (!savedDrinkNames)
+            savedDrinkNames = []; // if the value is not in storage, add it to the array for storage
+        var alreadyinStorage = false;
+        savedDrinkNames.forEach(function(item) {
+            var name = item.name;
+            if (name === drinkName) {
+                alreadyinStorage = true;
+            }
+        });
+        // if there isn't a match 
+        if (!alreadyinStorage) { // if the value is not already in storage: 
+            //add to storage
+            savedDrinkNames.push({
+                name: drinkName // we're only saving names to storage. we'll make an api call each time for the values stored in localstorage that are going to be entered into the dropdown menu for search bar 
+            });
+        } 
+        localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
+    })
+}
+
 var displayDrinkNameResults = function(drinkName, data) {
     var drinkNameResultsContainer = document.querySelector("#drink-name-results-container")
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
@@ -109,13 +143,23 @@ var displayDrinkNameResults = function(drinkName, data) {
         ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + Object.value + "'>" + Object.value + "</li>" // returning as undefined. help pls
         drinkNameIngredientsListEl.append(ingredientsEl);
     }); 
+     
 }
 
-showDrinkIngredients();
-var showDrinkIngredients = function(drinkIngredient, data) {
-    var ingredientDisplyContainer = document.querySelector("#drink-name-results-container")
-    var drinkIngredientImageEl = document.querySelector(".ingredient-image");
-    var drinkIngredientRecipe = document.querySelector("#ingredient-recipe");
+var drinkNameHandler = function(event) {  //submission handler for search by drink name
+    // prevent page from refreshing on submission
+    event.preventDefault();
+    // get value from input element
+    var drinkName = drinkNameInputEl.value.trim().toLowerCase();
+    console.log(drinkName)
+    if (drinkName !== null || drinkName !== "") { // if drinkName is properly entered
+        getDrinkNameInfo(drinkName);
+    } 
+    if ( drinkName === null || drinkName === "") { // if drinkName is not properly entered
+        return;
+        // create a modal for error
+    }
 }
 
-drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name searc
+
+drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
