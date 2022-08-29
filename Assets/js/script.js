@@ -118,4 +118,3 @@ var showDrinkIngredients = function(drinkIngredient, data) {
     var drinkIngredientRecipe = document.querySelector("#ingredient-recipe");
 }
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name searc
-
