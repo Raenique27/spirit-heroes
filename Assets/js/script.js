@@ -1,3 +1,4 @@
+// search by ingredient section
 var ingredientFormEl = document.getElementById("ingredient-form");
 var ingredientInputEl = document.querySelector("#ingredient-input");
 var ingredientButton = document.getElementById("ingredient-button");
@@ -32,12 +33,15 @@ var drinkIngredientInfo = function(drinkIngredient) {
         showDrinkIngredients(data, drinkIngredient);
     })
 }
-
-<<<<<<< HEAD
 var showDrinkIngredients = function(ingredients) {
     console.log(ingredients);
-=======
-var displayDrinkNameResults = function(drinkName, data) {
+}
+
+
+
+
+// Search by drink name section
+    var displayDrinkNameResults = function(drinkName, data) {
     var drinkNameResultsContainer = document.querySelector("#drink-name-results-container")
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
     var drinkNameResultsEl = document.querySelector(".drink-name-results");
@@ -105,8 +109,6 @@ var displayDrinkNameResults = function(drinkName, data) {
         ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + Object.value + "'>" + Object.value + "</li>" // returning as undefined. help pls
         drinkNameIngredientsListEl.append(ingredientsEl);
     }); 
-     
->>>>>>> 0c17b3cfd01aca3af7f20135c4da17ff40cddf9e
 }
 
 showDrinkIngredients();
@@ -116,9 +118,4 @@ var showDrinkIngredients = function(drinkIngredient, data) {
     var drinkIngredientRecipe = document.querySelector("#ingredient-recipe");
 }
 
-<<<<<<< HEAD
-drinkIngredientInfo();
-=======
-
-drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
->>>>>>> 0c17b3cfd01aca3af7f20135c4da17ff40cddf9e
+drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name searc
