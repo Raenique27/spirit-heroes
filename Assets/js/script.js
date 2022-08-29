@@ -14,8 +14,6 @@ var formSubmitHandler = function(event) {
   
       // clear old content
       ingredientInputEl.value = "";
-    } else {
-      console.log("enter something")
     }
 }
 
@@ -36,11 +34,14 @@ var drinkIngredientInfo = function(drinkIngredient) {
 }
 
 var showDrinkIngredients = function(ingredients) {
-    // find out is the api returned any drinks
-    if (ingredients.length === 0) {
-      console.log("yay");
-      return;
-    }
+    console.log(ingredients);
 }
-drinkIngredientInfo();
 
+showDrinkIngredients();
+var showDrinkIngredients = function(drinkIngredient, data) {
+    var ingredientDisplyContainer = document.querySelector("#drink-name-results-container")
+    var drinkIngredientImageEl = document.querySelector(".ingredient-image");
+    var drinkIngredientRecipe = document.querySelector("#ingredient-recipe");
+}
+
+drinkIngredientInfo();
