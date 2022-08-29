@@ -41,7 +41,7 @@ var showDrinkIngredients = function(ingredients) {
 
 
 // Search by drink name section
-    var displayDrinkNameResults = function(drinkName, data) {
+var displayDrinkNameResults = function(drinkName, data) {
     var drinkNameResultsContainer = document.querySelector("#drink-name-results-container")
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
     var drinkNameResultsEl = document.querySelector(".drink-name-results");
