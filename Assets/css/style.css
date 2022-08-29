@@ -22,3 +22,8 @@ img {
 #drink-name-recipe ul{
     list-style: none;
 }
+
+.error-handling{
+    color: red;
+    font-style: italic;
+}

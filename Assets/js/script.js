@@ -2,6 +2,7 @@
 var ingredientFormEl = document.getElementById("ingredient-form");
 var ingredientInputEl = document.querySelector("#ingredient-input");
 var ingredientButton = document.getElementById("ingredient-button");
+var drinkNameSection = document.getElementById("drink-name");
 
 var formSubmitHandler = function(event) {
     // stop page refresh
@@ -41,6 +42,9 @@ var showDrinkIngredients = function(ingredients) {
 
 
 // Search by drink name section
+
+
+
 var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
@@ -48,7 +52,14 @@ var drinkNameButton = document.getElementById("drink-name-button");
 var getDrinkNameInfo = function(drinkName) { //api call for drink name
     fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
     .then(function(response) {
+        if (response.ok) {
         return response.json();
+        }
+        if (!response.ok) {
+            var error = response.status;
+            return Promise.reject(error);
+        }
+        
     })
     .then(function(data)  {
         console.log(data);
@@ -72,8 +83,39 @@ var getDrinkNameInfo = function(drinkName) { //api call for drink name
             });
         } 
         localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
+    
+
     })
+    .catch(function() {
+        var nameSubmitContainer = document.getElementById("name-submit-container");
+        var nameErrorText = document.createElement("p");
+        nameErrorText.textContent = "Error: Failed to fetch info from database";
+        nameErrorText.className = "error-handling";
+        nameErrorText.id = "error-text"
+        nameSubmitContainer.append(nameErrorText);
+        
+        var removeError = document.createElement("button");
+        removeError.textContent = "Remove Error";
+        removeError.setAttribute("remove", removeError);
+        removeError.className = "alert button";
+        removeError.id = "remove-error";
+        nameSubmitContainer.append(removeError);
+
+        
+        removeError.addEventListener("click", drinkNameErrorRemover);
+    })
+};
+
+var drinkNameErrorRemover = function() {
+    var nameErrorText = document.getElementById("error-text");
+    nameErrorText.remove();
+
+    var nameErrorButton = document.getElementById("remove-error");
+    nameErrorButton.remove();
+   
 }
+    
+
 
 var displayDrinkNameResults = function(drinkName, data) {
     var drinkNameResultsContainer = document.querySelector("#drink-name-results-container")
@@ -169,3 +211,6 @@ var drinkNameHandler = function(event) {  //submission handler for search by dri
 }
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
+
+// var drinkNameErrorRemoval = document.getElementById("remove-error");
+// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover);
