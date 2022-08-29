@@ -39,17 +39,24 @@ var displayDrinkNameResults = function(drinkName, data) {
     var drinkNameRecipe = document.querySelector("#drink-name-recipe");
 
     var drinkNameResultsHeader = document.createElement("h4");
-    drinkNameResultsContainer.append(drinkNameResultsHeader);
+    drinkNameRecipe.appendChild(drinkNameResultsHeader);
     drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
+
+    drinkNameResultsContainer.appendChild(drinkNameRecipe);
     
     var drinkNameImage = document.createElement("img");
     drinkNameImageEl.append(drinkNameImage);
     drinkNameImageEl.innerHTML = "<img src='"+ data.drinks[0].strDrinkThumb + "/preview' alt='image of " + drinkName + "'>";
 
     var drinkNameIngredientsListEl = document.createElement("ul");
-    drinkNameResultsEl.append(drinkNameIngredientsListEl);
+    drinkNameRecipe.append(drinkNameIngredientsListEl);
     drinkNameIngredientsListEl.textContent = "Ingredients:"
     drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
+
+    drinkNameResultsContainer.appendChild(drinkNameRecipe);
+
+
+
 
     var drinkDataIngredientsFinal = [];
     var drinkData = data.drinks[0];
@@ -71,28 +78,28 @@ var displayDrinkNameResults = function(drinkName, data) {
         "Ingredient14": drinkData.strMeasure14  + drinkData.strIngredient14 ,
         "Ingredient15": drinkData.strMeasure15  + drinkData.strIngredient15       
         }];
-    var filterIngredients = function() {
+//     var filterIngredients = function() {
        
-        console.log(drinkDataIngredients);
-        // for (let i=0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
-        //     if (drinkDataIngredients[i].value !== "0" || drinkDataIngredients[i].value !== "null null" ) {
-        //         drinkDataIngredientsFinal.push(drinkDataIngredients[i]);// still returning all objects instead of selected. help pls
-        //     }
-        // }
-        // drinkDataIngredients.forEach(Object =>{ // need to get rid of ingredient objects that have an invalid value
-        //     if (Object.value  === 0) {
-        //         delete Object;
+//         console.log(drinkDataIngredients);
+//          for (let i=0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
+//             if (drinkDataIngredients[i].value !== "0" || drinkDataIngredients[i].value !== "null" ) {
+//                 drinkDataIngredientsFinal.push(drinkDataIngredients);// still returning all objects instead of selected. help pls
+//             }
+//          }
+//         drinkDataIngredients.forEach(Object =>{ // need to get rid of ingredient objects that have an invalid value
+//              if (Object.value  === 0) {
+//                 delete Object;
                 
-        //     }
-        // });
-        drinkDataIngredients = drinkDataIngredients.filter(function(value) {
-            return value !== 0, null, Number;
+//              }
+//         });
+//         drinkDataIngredients = drinkDataIngredients.filter(function(value) {
+//             return value !== 0, null, Number;
 
-        });
-        console.log(drinkDataIngredients);
-        console.log(drinkDataIngredientsFinal);
-    }
-    filterIngredients();
+//         });
+//         console.log(drinkDataIngredients);
+//         console.log(drinkDataIngredientsFinal);
+// }
+//     filterIngredients();
 
     drinkDataIngredients.forEach(function(Object) {  // for each object with a valid ingredient, create a list element
         console.log(Object);
@@ -107,12 +114,13 @@ var drinkNameHandler = function(event) {  //submission handler for search by dri
     // prevent page from refreshing on submission
     event.preventDefault();
     // get value from input element
-    var drinkName = drinkNameInputEl.value.trim().toLowerCase();
+    var drinkName = drinkNameInputEl.value.trim();
     console.log(drinkName)
     if (drinkName !== null || drinkName !== "") { // if drinkName is properly entered
         getDrinkNameInfo(drinkName);
+        drinkNameInputEl.value = "";
     } 
-    if ( drinkName === null || drinkName === "") { // if drinkName is not properly entered
+    else if ( drinkName === null || drinkName === "") { // if drinkName is not properly entered
         return;
         // create a modal for error
     }
