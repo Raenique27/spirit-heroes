@@ -120,58 +120,40 @@ var displayDrinkNameResults = function(drinkName, data) {
         "Ingredient13": drinkData.strMeasure13  + drinkData.strIngredient13 ,
         "Ingredient14": drinkData.strMeasure14  + drinkData.strIngredient14 ,
         "Ingredient15": drinkData.strMeasure15  + drinkData.strIngredient15       
-        }];
-//     var filterIngredients = function() {
+     }];
+}
+
+var filterIngredients = function() {
        
-//         console.log(drinkDataIngredients);
-//          for (let i=0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
-//             if (drinkDataIngredients[i].value !== "0" || drinkDataIngredients[i].value !== "null" ) {
-//                 drinkDataIngredientsFinal.push(drinkDataIngredients);// still returning all objects instead of selected. help pls
-//             }
-//          }
-//         drinkDataIngredients.forEach(Object =>{ // need to get rid of ingredient objects that have an invalid value
-//              if (Object.value  === 0) {
-//                 delete Object;
-                
-//              }
-//         });
-//         drinkDataIngredients = drinkDataIngredients.filter(function(value) {
-//             return value !== 0, null, Number;
+    console.log(drinkDataIngredients);
+     for (let i=0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
+        if (drinkDataIngredients[i].value !== "0" || drinkDataIngredients[i].value !== "null" ) {
+            drinkDataIngredientsFinal.push(drinkDataIngredients);// still returning all objects instead of selected. help pls
+        }
+     }
+    drinkDataIngredients.forEach(Object =>{ // need to get rid of ingredient objects that have an invalid value
+         if (Object.value  === 0) {
+            delete Object;
+            
+         }
+    });
+    drinkDataIngredients = drinkDataIngredients.filter(function(value) {
+        return value !== 0, null, Number;
 
-//         });
-//         console.log(drinkDataIngredients);
-//         console.log(drinkDataIngredientsFinal);
-// }
-//     filterIngredients();
+    });
+    console.log(drinkDataIngredients);
+    console.log(drinkDataIngredientsFinal);
+}
 
-    drinkDataIngredients.forEach(function(Object) {  // for each object with a valid ingredient, create a list element
-        console.log(Object);
-        var ingredientsEl = document.createElement("li");
-        ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + Object.value + "'>" + Object.value + "</li>" // returning as undefined. help pls
-        drinkNameIngredientsListEl.append(ingredientsEl);
-    }); 
+filterIngredients();
+
+drinkDataIngredients.forEach(function(Object) {  // for each object with a valid ingredient, create a list element
+    console.log(Object);
+    var ingredientsEl = document.createElement("li");
+    ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + Object.value + "'>" + Object.value + "</li>" // returning as undefined. help pls
+    drinkNameIngredientsListEl.append(ingredientsEl);
+}); 
      
-<<<<<<< HEAD
-}
-
-var drinkNameHandler = function(event) {  //submission handler for search by drink name
-    // prevent page from refreshing on submission
-    event.preventDefault();
-    // get value from input element
-    var drinkName = drinkNameInputEl.value.trim().toLowerCase();
-    console.log(drinkName)
-    if (drinkName !== null || drinkName !== "") { // if drinkName is properly entered
-        getDrinkNameInfo(drinkName);
-    } 
-    if ( drinkName === null || drinkName === "") { // if drinkName is not properly entered
-        return;
-        // create a modal for error
-    }
-}
-
-
-=======
-}
 var drinkNameHandler = function(event) {  //submission handler for search by drink name
     // prevent page from refreshing on submission
     event.preventDefault();
@@ -187,6 +169,4 @@ var drinkNameHandler = function(event) {  //submission handler for search by dri
         // create a modal for error
     }
 }
-
->>>>>>> 019678576a545d9258189dd856aa5d6f008350d8
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
