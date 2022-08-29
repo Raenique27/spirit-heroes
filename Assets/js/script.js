@@ -1,37 +1,46 @@
-var drinkNameFormEl = document.getElementById("drink-name-form");
-var drinkNameInputEl = document.querySelector("#drink-name-submission");
-var drinkNameButton = document.getElementById("drink-name-button");
+// search by ingredient section
+var ingredientFormEl = document.getElementById("ingredient-form");
+var ingredientInputEl = document.querySelector("#ingredient-input");
+var ingredientButton = document.getElementById("ingredient-button");
 
-var getDrinkNameInfo = function(drinkName) { //api call for drink name
-    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(data)  {
-        console.log(data);
-        displayDrinkNameResults(drinkName, data);
-        // save drinkName to localstorage
-        var savedDrinkNames = JSON.parse(localStorage.getItem("drink names")); // load saves to compare existing values w/ values yet to exist
-        if (!savedDrinkNames)
-            savedDrinkNames = []; // if the value is not in storage, add it to the array for storage
-        var alreadyinStorage = false;
-        savedDrinkNames.forEach(function(item) {
-            var name = item.name;
-            if (name === drinkName) {
-                alreadyinStorage = true;
-            }
-        });
-        // if there isn't a match 
-        if (!alreadyinStorage) { // if the value is not already in storage: 
-            //add to storage
-            savedDrinkNames.push({
-                name: drinkName // we're only saving names to storage. we'll make an api call each time for the values stored in localstorage that are going to be entered into the dropdown menu for search bar 
-            });
-        } 
-        localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
-    })
+var formSubmitHandler = function(event) {
+    // stop page refresh
+    event.preventDefault();
+  
+    // get a value from the input
+    var ingredient = ingredientInputEl.value.trim();
+  
+    if (ingredient) {
+        drinkIngredientInfo(ingredient);
+  
+      // clear old content
+      ingredientInputEl.value = "";
+    }
 }
 
+// api call by drink ingredient
+var drinkIngredientInfo = function(drinkIngredient) { 
+    var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient  + "";
+  
+    // make fetch request
+    fetch(apiUrl)
+    .then(function(response) {
+        console.log(response);
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+        showDrinkIngredients(data, drinkIngredient);
+    })
+}
+var showDrinkIngredients = function(ingredients) {
+    console.log(ingredients);
+}
+
+
+
+
+// Search by drink name section
 var displayDrinkNameResults = function(drinkName, data) {
     var drinkNameResultsContainer = document.querySelector("#drink-name-results-container")
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
@@ -107,9 +116,7 @@ var displayDrinkNameResults = function(drinkName, data) {
         ingredientsEl.innerHTML = "<li class='ingredients-list-el' data-search='" + Object.value + "'>" + Object.value + "</li>" // returning as undefined. help pls
         drinkNameIngredientsListEl.append(ingredientsEl);
     }); 
-     
 }
-
 var drinkNameHandler = function(event) {  //submission handler for search by drink name
     // prevent page from refreshing on submission
     event.preventDefault();
@@ -126,5 +133,11 @@ var drinkNameHandler = function(event) {  //submission handler for search by dri
     }
 }
 
+showDrinkIngredients();
+var showDrinkIngredients = function(drinkIngredient, data) {
+    var ingredientDisplyContainer = document.querySelector("#drink-name-results-container")
+    var drinkIngredientImageEl = document.querySelector(".ingredient-image");
+    var drinkIngredientRecipe = document.querySelector("#ingredient-recipe");
+}
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
