@@ -17,7 +17,7 @@ var formSubmitHandler = function(event) {
     }
 }
 
-// api call by drink ingredient
+// api call by drink ingredien
 var drinkIngredientInfo = function(drinkIngredient) { 
     var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient  + "";
   
@@ -32,14 +32,6 @@ var drinkIngredientInfo = function(drinkIngredient) {
         showDrinkIngredients(data, drinkIngredient);
     })
 }
-
-
-
-
-
-
-
-
 
 showDrinkIngredients();
 var showDrinkIngredients = function(drinkIngredient, data) {
