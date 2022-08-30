@@ -19,7 +19,7 @@ var formSubmitHandler = function (event) {
     }
 }
 
-// api call by drink ingredien
+// api call by drink ingredient
 var drinkIngredientInfo = function (drinkIngredient) {
     var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient + "";
 
@@ -28,6 +28,8 @@ var drinkIngredientInfo = function (drinkIngredient) {
         .then(function (response) {
             console.log(response);
             return response.json();
+            
+        
         })
         .then(function (data) {
             console.log(data);
@@ -46,70 +48,72 @@ var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
 
-var getDrinkNameInfo = function(drinkName) { //api call for drink name
-    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
-    .then(function(response) {
-        if (response.ok) {
-        return response.json();
-        }
-        if (!response.ok) {
-            var error = response.status;
-            return Promise.reject(error);
-        }
-        
-    })
-    .then(function(data)  {
-        console.log(data);
-        displayDrinkNameResults(drinkName, data);
-        // save drinkName to localstorage
-        var savedDrinkNames = JSON.parse(localStorage.getItem("drink names")); // load saves to compare existing values w/ values yet to exist
-        if (!savedDrinkNames)
-            savedDrinkNames = []; // if the value is not in storage, add it to the array for storage
-        var alreadyinStorage = false;
-        savedDrinkNames.forEach(function(item) {
-            var name = item.name;
-            if (name === drinkName) {
-                alreadyinStorage = true;
+
+
+var getDrinkNameInfo = function (drinkName) { //api call for drink name
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName + "")
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
             }
-        });
-        // if there isn't a match 
-        if (!alreadyinStorage) { // if the value is not already in storage: 
-            //add to storage
-            savedDrinkNames.push({
-                name: drinkName // we're only saving names to storage. we'll make an api call each time for the values stored in localstorage that are going to be entered into the dropdown menu for search bar 
+            if (!response.ok) {
+                var error = response.status;
+                return Promise.reject(error);
+            }
+
+        })
+        .then(function (data) {
+            console.log(data);
+            displayDrinkNameResults(drinkName, data);
+            // save drinkName to localstorage
+            var savedDrinkNames = JSON.parse(localStorage.getItem("drink names")); // load saves to compare existing values w/ values yet to exist
+            if (!savedDrinkNames)
+                savedDrinkNames = []; // if the value is not in storage, add it to the array for storage
+            var alreadyinStorage = false;
+            savedDrinkNames.forEach(function (item) {
+                var name = item.name;
+                if (name === drinkName) {
+                    alreadyinStorage = true;
+                }
             });
-        } 
-        localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
-    
+            // if there isn't a match 
+            if (!alreadyinStorage) { // if the value is not already in storage: 
+                //add to storage
+                savedDrinkNames.push({
+                    name: drinkName // we're only saving names to storage. we'll make an api call each time for the values stored in localstorage that are going to be entered into the dropdown menu for search bar 
+                });
+            }
+            localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
 
-    })
-    .catch(function() {
-        var nameSubmitContainer = document.getElementById("name-submit-container");
-        var nameErrorText = document.createElement("p");
-        nameErrorText.textContent = "Error: Failed to fetch info from database";
-        nameErrorText.className = "error-handling";
-        nameErrorText.id = "error-text"
-        nameSubmitContainer.append(nameErrorText);
-        
-        var removeError = document.createElement("button");
-        removeError.textContent = "Remove Error";
-        removeError.setAttribute("remove", removeError);
-        removeError.className = "alert button";
-        removeError.id = "remove-error";
-        nameSubmitContainer.append(removeError);
 
-        
-        removeError.addEventListener("click", drinkNameErrorRemover);
-    })
+        })
+        .catch(function () {
+            var nameSubmitContainer = document.getElementById("name-submit-container");
+            var nameErrorText = document.createElement("p");
+            nameErrorText.textContent = "Error: Failed to fetch info from database";
+            nameErrorText.className = "error-handling";
+            nameErrorText.id = "error-text"
+            nameSubmitContainer.append(nameErrorText);
+
+            var removeError = document.createElement("button");
+            removeError.textContent = "Remove Error";
+            removeError.setAttribute("remove", removeError);
+            removeError.className = "alert button";
+            removeError.id = "remove-error";
+            nameSubmitContainer.append(removeError);
+
+
+            removeError.addEventListener("click", drinkNameErrorRemover);
+        })
 };
 
-var drinkNameErrorRemover = function() {
+var drinkNameErrorRemover = function () {
     var nameErrorText = document.getElementById("error-text");
     nameErrorText.remove();
 
     var nameErrorButton = document.getElementById("remove-error");
     nameErrorButton.remove();
-   
+
 }
 
 var displayDrinkNameResults = function (drinkName, data) {
@@ -162,14 +166,16 @@ var displayDrinkNameResults = function (drinkName, data) {
 
         console.log(drinkDataIngredients);
         for (let i = 0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
-            if (drinkDataIngredients[i] != 0) {
+            if (drinkDataIngredients[i] != 0){
                 drinkDataIngredientsFinal.push(drinkDataIngredients[i]);// still returning all objects instead of selected. help pls
-            }
+            } 
         }
 
     }
     filterIngredients();
-    drinkDataIngredientsFinal.forEach(function(Object) {  // for each object with a valid ingredient, create a list element
+
+
+    drinkDataIngredientsFinal.forEach(function (Object) {  // for each object with a valid ingredient, create a list element
         console.log(Object);
         var ingredientsEl = document.createElement("li");
         ingredientsEl.textContent = Object;
@@ -178,9 +184,11 @@ var displayDrinkNameResults = function (drinkName, data) {
         drinkNameIngredientsListEl.appendChild(ingredientsEl);
         drinkNameRecipe.appendChild(drinkNameIngredientsListEl);
         drinkNameResultsContainer.appendChild(drinkNameRecipe);
-    }); 
+
+    });
 
 }
+
 var drinkNameHandler = function (event) {  //submission handler for search by drink name
     // prevent page from refreshing on submission
     event.preventDefault();
@@ -195,6 +203,8 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
         return;
         // create a modal for error
     }
+
+
 }
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
