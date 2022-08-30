@@ -251,6 +251,7 @@ var nonalcoholicformSubmitHandler = function (event) {
     }
 }
 
+
 var getNonalcoholicNameInfo = function(nonalcoholicName) {
     fetch('http://https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' + nonalcohalicDrink + "")
         .then(function(response) {
