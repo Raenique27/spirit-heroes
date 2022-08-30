@@ -234,10 +234,9 @@ var nonalcoholicNameEl = document.getElementById("non-alcoholic-form");
 var nonalcoholicInputEl = document.querySelector("#non-alcoholic-name-submission"); 
 var nonalcoholicBarEl = document.getElementById("non-alcoholic-search-bar");
 var nonalcoholicButtonEl = document.getElementById("non-alcoholic-search-button");
-let nonalcohalicDrink = [];
-// console.log(nonalcoholicBarEl);
 
-var formSubmitHandler = function (event) {
+
+var nonalcoholicformSubmitHandler = function (event) {
     // stop page refresh
     event.preventDefault();
 
@@ -254,32 +253,65 @@ var formSubmitHandler = function (event) {
 
 var getNonalcoholicNameInfo = function(nonalcoholicName) {
     fetch('http://https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' + nonalcohalicDrink + "")
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(data) {
-        console.log(data);
-        displayNonalcoholicNameResults(nonalcoholicName, data);
-        //save nonalcoholicdrinkName to local storage
-        var savednonalcoholicNames = JSON.parse(localStorage.getItem("non-alcoholic drink names")); // load saves
-        if (!savednonalcoholicNames) 
-        savednonalcoholicNames = [];
-        var alreadyinStorage = false;
-        savednonalcoholicNames.forEach(function(item){
-            var name = item.name;
-            if (name === nonalcoholicName) {
-                alreadyinStorage = true;
+        .then(function(response) {
+            if (response.ok) {
+            return response.json();   
             }
-        });
-        // no match
-        if(!alreadyinStorage) {
-            savednonalcoholicNames.push({
-                name: nonalcoholicName 
-            })
-        } 
-        localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
-    });
+            if (!response.ok) {
+                var error = response.status;
+                return Promise.reject(error);
+            }
+            
+        })
+        .then(function(data) {
+            console.log(data);
+            displayNonalcoholicNameResults(nonalcoholicName, data);
+            //save nonalcoholicdrinkName to local storage
+            var savednonalcoholicNames = JSON.parse(localStorage.getItem("non-alcoholic drink names")); // load saves
+            if (!savednonalcoholicNames) 
+            savednonalcoholicNames = [];
+            var alreadyinStorage = false;
+            savednonalcoholicNames.forEach(function(item){
+                var name = item.name;
+                if (name === nonalcoholicName) {
+                    alreadyinStorage = true;
+                }
+            });
+            // no match
+            if(!alreadyinStorage) {
+                savednonalcoholicNames.push({
+                    name: nonalcoholicName 
+                });
+            } 
+            localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
+        })
+        .catch(function () {
+            var nonalcoholicnameSubmitContainer = document.getElementsById("non-alcoholic-name-container");
+            var nameErrorText = document.createElement("p");
+            nameErrorText.textContent = "Error: Failed to fetch info from database";
+            nameErrorText.className = "error-handling";
+            nameErrorText.id = "error-text"
+            nonalcoholicnameSubmitContainer.append(nameErrorText);
+
+            var removeError = document.createElement("button");
+            removeError.textContent = "Remove Error";
+            removeError.setAttribute("remove", removeError);
+            removeError.classname = "alert-button";
+            removeError.id = "remove-error";
+            nonalcoholicnameSubmitContainer.append(removeError);
+
+            removeError.addEventListener("click", nonalcoholicNameErrorRemover);
+        })
+
 };
+var nonalcoholicNameErrorRemover = function () {
+    var nameErrorText = document.getElementById("error-text");
+    nameErrorText.remove();
+
+    var  nameErrorButton = document.getElementById("remove-error");
+    nameErrorButton.remove();
+} 
+
     displayNonalcoholicDrinkNameResults = function(nonalcoholicdrinkName, data) {
         var nonalcoholicNameResultsContainer = document.querySelector("#non-alcoholic-results-container");
         var nonalcoholicNameImageEl = document.querySelector(".non-alcoholic-image-container");
@@ -287,14 +319,87 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
         var nonalcoholicNameRecipe = document.querySelector("#non-alcoholic-recipe");
 
         var nonalcoholicNameResultsHeader = document.createElement("h4");
-        nonalcohalicNameResultsEl.append(nonalcoholicNameResultsHeader);
+        nonalcohalicNameResultsEl.appendChild(nonalcoholicNameResultsHeader);
         nonalcoholicNameResultsHeader.innerHTML = "<h4 'non-alcoholic-name-image-header' class='non-alcoholic-name-headers'>" + nonalcoholicName + "</h4>";
+
+        nonalcohalicNameResultsContainer.appendChild(nonalcoholicNameRecipe);
 
         var nonalcoholicNameImage = document.createElement("img");
         nonalcoholicNameImageEl.append(nonalcoholicNameImage);
         nonalcoholicNameImageEl.innerHTML = "<img src='" + data.nonalcoholic[0].strDrinkThumb + "/preview' alt='image of " + nonalcoholicName + "'>";
-    }
 
-    
+        nonalcohalicNameResultsContainer.appendChild(nonalcoholicNameRecipe);
+
+       var nonalcoholicDataIngredientsFinal = [];
+       var nonalcoholicData = data.nonalcoholic[0];
+       console.log(nonalcoholicData);
+       var nonalcoholicDataIngredients = [
+        nonalcoholicData.strMeasure1 + nonalcoholicData.strIngredient1,
+        nonalcoholicData.strMeasure2 + nonalcoholicData.strIngredient2,
+        nonalcoholicData.strMeasure3 + nonalcoholicData.strIngredient3,
+        nonalcoholicData.strMeasure4 + nonalcoholicData.strIngredient4,
+        nonalcoholicData.strMeasure5 + nonalcoholicData.strIngredient5,
+        nonalcoholicData.strMeasure6 + nonalcoholicData.strIngredient6,
+        nonalcoholicData.strMeasure7 + nonalcoholicData.strIngredient7,
+        nonalcoholicData.strMeasure8 + nonalcoholicData.strIngredient8,
+        nonalcoholicData.strMeasure9 + nonalcoholicData.strIngredient9,
+        nonalcoholicData.strMeasure10 + nonalcoholicData.strIngredient10,
+        nonalcoholicData.strMeasure11 + nonalcoholicData.strIngredient11,
+        nonalcoholicData.strMeasure12 + nonalcoholicData.strIngredient12,
+        nonalcoholicData.strMeasure13 + nonalcoholicData.strIngredient13,
+        nonalcoholicData.strMeasure14 + nonalcoholicData.strIngredient14,
+        nonalcoholicData.strMeasure15 + nonalcoholicData.strIngredient15
+       ];
+
+    var filternonalcoholicIngredients = function () {
+        console.log(nonalcoholicDataIngredients);
+        for (let i=0; i < nonalcoholicDataIngredients.length; i++) {
+            if (nonalcoholicDataIngredients[i] !=0){
+                nonalcoholicDataIngredientsFinal.push(nonalcoholicDataIngredients[i]);
+            }
+        }
+    }
+    filternonalcoholicIngredients();
+
+
+    nonalcoholicDataIngredientsFinal.forEach(function(Object) {
+        console.log(Object);
+        var nonalcoholicIngredientsEl = document.createElement("li");
+        nonalcoholicIngredientsEl.textContent = Object;
+        nonalcoholicIngredientsEl.setAttribute("data-search", Object);
+        nonalcoholicIngredientsEl.setAttribute("class", "non-alcoholic-ingredients-list-el")
+        nonalcoholicIngredientsListEl.appendChild(nonalcoholicingredientsEl);
+        nonalcoholicNameRecipe.appendChild(nonalcoholicIngredientsListEl);
+        nonalcoholicNameResultsContainer.appendChild(nonalcohalicNameRecipe);
+    });  
+}    
+
+var nonalcoholicHandler = function (event) {
+    event.preventDefault();
+
+    var nonalcoholicName = nonalcoholicNameEl.value.trim();
+    console.log(nonalcoholicName)
+    if (nonalcoholicName == null || nonalcoholicName !== "") {
+        getNonalcoholicNameInfo(nonalcoholicName);
+        nonalcoholicInputEl.value = "";
+    }
+    if (nonalcoholicName === null || nonalcoholicName === "") {
+        //modal for error
+    }
+    var nonalcoholicResultsHeader = document.getElementById("non-alcoholic-header");
+    var nonalcoholicNameImage = document.querySelector("#image-of-non-alcoholic-drink");
+    var nonalcoholicIngredientsListEl = document.querySelector("#non-alcoholic-ingredient-list");
+    if (nonalcoholicResultsHeader, nonalcoholicNameImage, nonalcoholicIngredientsListEl) {
+
+        nonalcoholicResultsHeader.remove();
+
+        nonalcoholicNameImage.remove();
+
+        nonalcoholicIngredientsListEl.remove();
+
+    }
+}
+
+//nonalcoholicButtonEl.addEventListener("click", nonalcoholicHandler)
 // var drinkNameErrorRemoval = document.getElementById("remove-error");
 // drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
