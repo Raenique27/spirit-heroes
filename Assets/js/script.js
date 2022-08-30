@@ -226,7 +226,6 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
-drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
 // Non-Alcoholic Search-Bar
 
@@ -244,11 +243,11 @@ var formSubmitHandler = function (event) {
     // get a value from the input
     var nonalcoholicName = nonalcoholicInputEl.value.trim();
 
-    if (nonalcoholicName) {
-        nonalcoholicNameInfo(nonalcoholicname);
+    if (nonAlcoholicName) {
+        nonalcoholicNameInfo(nonalcoholicName);
 
         // clear old content
-        nonalcoholicInputEl.value = "";
+        nonAlcoholicInputEl.value = "";
     }
 }
 
