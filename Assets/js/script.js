@@ -174,7 +174,7 @@ var displayDrinkNameResults = function (drinkName, data) {
         console.log(drinkDataIngredients);
         for (let i = 0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
             if (drinkDataIngredients[i] != 0){
-                drinkDataIngredientsFinal.push(drinkDataIngredients[i]);// still returning all objects instead of selected. help pls
+                drinkDataIngredientsFinal.push(drinkDataIngredients[i]);
             } 
         }
 
@@ -182,7 +182,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     filterIngredients();
 
 
-    drinkDataIngredientsFinal.forEach(function (Object) {  // for each object with a valid ingredient, create a list element
+    drinkDataIngredientsFinal.forEach(function (Object) {  // for each item with a valid ingredient, create a list element
         console.log(Object);
         var ingredientsEl = document.createElement("li");
         ingredientsEl.textContent = Object;
