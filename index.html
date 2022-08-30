@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css"
         crossorigin="anonymous">
     <!--Foundation CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="custom stylesheet" href="./Assets/css/style.css">
     <!--Custom Css-->
 </head>
 
 <body>
     <header>
-        <h1>Booze Buddy!</h1>
+        <h1>Booze Buddy <i class="fas fa-cocktail"></i></h1>
         <nav>
             <ul class="menu align-right">
                 <li>
@@ -39,8 +40,7 @@
                     <form id="drink-name-form">
                         <input type="text" placeholder="Search by Drink Name" id="drink-name-submission">
                         <button id="drink-name-button" type="button" name="drink-name-search-button" class="submit success button">Search</button>
-                    </form>
-                    
+                    </form> 
                 </div>
                 <div class="drink-name-results callout flex-child-auto" style="width:55%;">
                     <div class="grid-x grid-padding-x align-center text-center">
@@ -58,15 +58,15 @@
                 <div class="ingredients-form callout flex-child-auto">
                     <h2 class="subtitle-2"><span id="ingredients-header"></span></h2>
                     <form>
-                        <input type="text" placeholder="Search by Ingredient">
-                        <button type="submit" name="ingredients-search-button" class="submit success button">Search</button>
+                        <input type="text" placeholder="Search by Ingredient" id="ingredient-submission">
+                        <button id="drink-ingredient-buttom" type="submit" name="ingredients-search-button" class="submit success button">Search</button>
                     </form>
                 </div>
                 <div class="ingredients-results callout flex-child-auto" style="width:55%;">
                     <div class="grid-x grid-padding-x align-center text-center">
                         <div class="cell small-4 flex-container flex-dir-row" style="height:200px; width:100%;">
-                            <div id="ingredient-image" class="callout flex-child-auto">Image</div>
-                            <div id="ingredient-recipe" class="callout flex-child-auto">Info</div>
+                            <div id="ingredient-image" class="callout flex-child-auto"></div>
+                            <div id="ingredient-recipe" class="callout flex-child-auto"></div>
                         </div>
                     </div>
                 </div>
@@ -79,14 +79,14 @@
                     <h2 class="subtitle-3"><span id="non-alcoholic-header"></span></h2>
                     <form id="non-alcoholic-form">
                         <input id="non-alcoholic-search-bar" type="text" placeholder="Search Non-Alcoholic">
-                        <button type="submit" name="non-alcoholic-search-button" class="submit success button">Search</button>
+                        <button id="non-alcoholic-button" type="submit" name="non-alcoholic-search-button" class="submit success button">Search</button>
                     </form>
                 </div>
                 <div class="non-alcoholic-results callout flex-child-auto" style="width:55%;">
                     <div class="grid-x grid-padding-x align-center text-center">
                         <div class="cell small-4 flex-container flex-dir-row" style="height:200px; width:100%;">
-                            <div id="non-alcoholic-image" class="callout flex-child-auto">Image</div>
-                            <div id="non-alcoholic-recipe" class="callout flex-child-auto">Info</div>
+                            <div id="non-alcoholic-image" class="callout flex-child-auto"></div>
+                            <div id="non-alcoholic-recipe" class="callout flex-child-auto"></div>
                         </div>
                     </div>
                 </div>

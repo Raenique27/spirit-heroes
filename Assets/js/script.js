@@ -251,6 +251,21 @@ var nonalcoholicformSubmitHandler = function (event) {
     }
 }
 
+var formSubmitHandler = function (event) {
+    // stop page refresh
+    event.preventDefault();
+
+    // get a value from the input
+    var nonalcoholicName = nonalcoholicInputEl.value.trim();
+
+    if (nonalcoholicName) {
+        nonalcoholicNameInfo(nonalcoholicname);
+
+        // clear old content
+        nonalcoholicInputEl.value = "";
+    }
+}
+
 var getNonalcoholicNameInfo = function(nonalcoholicName) {
     fetch('http://https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' + nonalcohalicDrink + "")
         .then(function(response) {
