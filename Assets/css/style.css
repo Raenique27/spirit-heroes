@@ -18,6 +18,10 @@ header h1 {
     color: lightcyan;
 }
 
+.fa-cocktail {
+    display: inline-block;
+    transform: rotate(-11deg);
+}
 main {
     margin-top: 15px;
 }
@@ -27,12 +31,19 @@ nav ul {
 }
 
 img {
-    width: 160px;
+    width: 200px;
+    position: relative;
+    bottom: 20px;
+}
+
+#drink-name-recipe {
+    position: relative;
+    bottom: 10px;
 }
 
 #drink-name-recipe ul{
     list-style: none;
-    font-size: 10px;
+    font-size: 80%;
 }
 
 .error-handling{
@@ -45,32 +56,48 @@ footer {
     color: lightblue;
 }
 
-#drink-name-button {
+#drink-name-button,
+#non-alcoholic-button,
+#drink-ingredient-buttom {
     background-color: rgb(51, 173, 213);
     color: lightgoldenrodyellow;
 }
 
+#drink-ingredient-buttom:hover,
+#non-alcoholic-button:hover,
 #drink-name-button:hover {
     background: linear-gradient(to bottom left, #0099cc 6%, #00ff99 115%);
     color: white;
 }
 
-#drink-ingredient-buttom{
-    background-color: rgb(51, 173, 213);
-    color: lightgoldenrodyellow;
+
+#drink-name-image,
+#ingredient-image,
+#non-alcoholic-image {
+    border: 1px;
+    background-color: #fbf8f8;
+
 }
 
-#drink-ingredient-buttom:hover {
-    background: linear-gradient(to bottom left, #0099cc 6%, #00ff99 115%);
-    color: white;
+#drink-name-recipe,
+#ingredient-recipe, 
+#non-alcoholic-recipe{
+    border: 1px;
+    background-color: #fbf8f8;
+    
 }
 
-#non-alcoholic-button{
-    background-color: rgb(51, 173, 213);
-    color: lightgoldenrodyellow;
+#drink-name-submission,
+#ingredient-submission,
+#non-alcoholic-search-bar {
+    background-color: #fdfdf1;
 }
 
-#non-alcoholic-button:hover {
-    background: linear-gradient(to bottom left, #0099cc 6%, #00ff99 115%);
-    color: white;
+#name-submit-container,
+.drink-name-results,
+.ingredients-form, 
+.ingredients-results,
+.non-alcoholic-form,
+.non-alcoholic-results {
+    background-color: #fbf8f8;
 }
