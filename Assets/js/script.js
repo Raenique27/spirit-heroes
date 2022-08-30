@@ -172,33 +172,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
     var drinkNameResultsEl = document.querySelector(".drink-name-results");
     var drinkNameRecipe = document.querySelector("#drink-name-recipe");
-<<<<<<< HEAD
-    var drinkNameResultsHeader = document.createElement("h4");
-    drinkNameRecipe.appendChild(drinkNameResultsHeader);
-    drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
-=======
-    var drinkNameImageDiv = document.querySelector("#drink-name-image")
-    
 
-    var drinkNameResultsHeader = document.createElement("h4");
-    drinkNameRecipe.appendChild(drinkNameResultsHeader);
-    drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
-    drinkNameResultsHeader.id = "drink-name-results-header"
-
->>>>>>> 971583069df480911aab47e6613d9b002e700241
-    drinkNameResultsContainer.appendChild(drinkNameRecipe);
-    var drinkNameImage = document.createElement("img");
-<<<<<<< HEAD
-    drinkNameImageEl.append(drinkNameImage);
-    drinkNameImageEl.innerHTML = "<img src='" + data.drinks[0].strDrinkThumb + "/preview' alt='image of " + drinkName + "l'>";
-=======
-    drinkNameImageDiv.append(drinkNameImage);
-    drinkNameImage.src = data.drinks[0].strDrinkThumb + "/preview";
-    drinkNameImage.alt  = "image of" + drinkName + "";
-    drinkNameImage.id = "image-of-drink";
-    // drinkNameImage.innerHTML = "<img src='" + data.drinks[0].strDrinkThumb + "/preview' alt='image of " + drinkName + "'>";
-
->>>>>>> 971583069df480911aab47e6613d9b002e700241
     var drinkNameIngredientsListEl = document.createElement("ul");
     drinkNameRecipe.append(drinkNameIngredientsListEl);
     drinkNameIngredientsListEl.id = "drinkName-ingredient-list";
