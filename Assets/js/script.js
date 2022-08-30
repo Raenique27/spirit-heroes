@@ -229,5 +229,73 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
     }
 }
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
+
+// Non-Alcoholic Search-Bar
+
+var nonalcoholicNameEl = document.getElementById("non-alcoholic-form");
+var nonalcoholicInputEl = document.querySelector("#non-alcoholic-name-submission"); 
+var nonalcoholicBarEl = document.getElementById("non-alcoholic-search-bar");
+var nonalcoholicButtonEl = document.getElementById("non-alcoholic-search-button");
+let nonalcohalicDrink = [];
+// console.log(nonalcoholicBarEl);
+
+var formSubmitHandler = function (event) {
+    // stop page refresh
+    event.preventDefault();
+
+    // get a value from the input
+    var nonalcoholicName = nonalcoholicInputEl.value.trim();
+
+    if (nonalcoholicName) {
+        nonalcoholicNameInfo(nonalcoholicname);
+
+        // clear old content
+        nonalcoholicInputEl.value = "";
+    }
+}
+
+var getNonalcoholicNameInfo = function(nonalcoholicName) {
+    fetch('http://https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' + nonalcohalicDrink + "")
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+        displayNonalcoholicNameResults(nonalcoholicName, data);
+        //save nonalcoholicdrinkName to local storage
+        var savednonalcoholicNames = JSON.parse(localStorage.getItem("non-alcoholic drink names")); // load saves
+        if (!savednonalcoholicNames) 
+        savednonalcoholicNames = [];
+        var alreadyinStorage = false;
+        savednonalcoholicNames.forEach(function(item){
+            var name = item.name;
+            if (name === nonalcoholicName) {
+                alreadyinStorage = true;
+            }
+        });
+        // no match
+        if(!alreadyinStorage) {
+            savednonalcoholicNames.push({
+                name: nonalcoholicName 
+            })
+        } 
+        localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
+    });
+};
+    displayNonalcoholicDrinkNameResults = function(nonalcoholicdrinkName, data) {
+        var nonalcoholicNameResultsContainer = document.querySelector("#non-alcoholic-results-container");
+        var nonalcoholicNameImageEl = document.querySelector(".non-alcoholic-image-container");
+        var nonalcohalicNameResultsEl = document.querySelector(".non-alcoholic-results");
+        var nonalcoholicNameRecipe = document.querySelector("#non-alcoholic-recipe");
+
+        var nonalcoholicNameResultsHeader = document.createElement("h4");
+        nonalcohalicNameResultsEl.append(nonalcoholicNameResultsHeader);
+        nonalcoholicNameResultsHeader.innerHTML = "<h4 'non-alcoholic-name-image-header' class='non-alcoholic-name-headers'>" + nonalcoholicName + "</h4>";
+
+        var nonalcoholicNameImage = document.createElement("img");
+        nonalcoholicNameImageEl.append(nonalcoholicNameImage);
+        nonalcoholicNameImageEl.innerHTML = "<img src='" + data.nonalcoholic[0].strDrinkThumb + "/preview' alt='image of " + nonalcoholicName + "'>";
+    }
+
 // var drinkNameErrorRemoval = document.getElementById("remove-error");
-// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover);
+// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
