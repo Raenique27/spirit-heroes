@@ -34,7 +34,7 @@ var drinkIngredientInfo = function (ingredient) {
         })
         .then(function (data) {
             console.log(data);
-            showDrinksByIngredient(data, ingredient);
+            displayIngredientResults(data, ingredient);
             // save ingredient to local storage
             var savedIngredients = JSON.parse(localStorage.getItem("ingredients"));
             if (!savedIngredients)
@@ -82,11 +82,30 @@ var ingredientErrorRemover = function() {
     ingredientErrorButton.remove();
 }
 
-var showDrinksByIngredient = function (ingredients) {
-    console.log(ingredients);
+var displayIngredientResults = function (ingredient, data) {
+    console.log(ingredient);
+    var ingredientResultsContainer = document.querySelector("#ingredient-results-container");
+    var ingredientDrinks = document.querySelector("#ingredient-drinks");
+    var ingredientImageDiv = document.querySelector("#ingredient-image");
+
+    var ingredientResultsHeader = document.createElement("h4");
+    ingredientDrinks.append(ingredientResultsHeader);
+    ingredientResultsHeader.innerHTML = "<h4 id='ingredient-image-header' class='ingredient-name-headers'>" + ingredient + "</h4>";
+    ingredientResultsHeader.id = "ingredient-results-header";
+
+    ingredientResultsContainer.append(ingredientDrinks);
+
+    var ingredientImage = document.createElement("img");
+    ingredientImageDiv.append(ingredientImage);
+    ingredientImage.src = "https://www.thecocktaildb.com/images/ingredients/" + ingredient + "-Small.png";
+    ingredientImage.alt = "image of" + ingredient + "";
+    ingredientImage.id = "image-of-ingredient";
+
 }
 
 ingredientSearchButton.addEventListener("click", ingredientFormHandler);
+
+
 // Search by drink name section
 var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
