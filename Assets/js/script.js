@@ -400,6 +400,6 @@ var nonalcoholicHandler = function (event) {
     }
 }
 
-//nonalcoholicButtonEl.addEventListener("click", nonalcoholicHandler)
+nonalcoholicButtonEl.addEventListener("click", nonalcoholicHandler)
 // var drinkNameErrorRemoval = document.getElementById("remove-error");
 // drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
