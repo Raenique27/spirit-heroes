@@ -159,22 +159,22 @@ var getDrinkNameInfo = function (drinkName) { //api call for drink name
 
 
         })
-        .catch(function () {
+        .catch(function() {
             var nameSubmitContainer = document.getElementById("name-submit-container");
             var nameErrorText = document.createElement("p");
             nameErrorText.textContent = "Error: Failed to fetch info from database";
             nameErrorText.className = "error-handling";
             nameErrorText.id = "error-text"
             nameSubmitContainer.append(nameErrorText);
-
+            
             var removeError = document.createElement("button");
             removeError.textContent = "Remove Error";
             removeError.setAttribute("remove", removeError);
             removeError.className = "alert button";
             removeError.id = "remove-error";
             nameSubmitContainer.append(removeError);
-
-
+    
+            
             removeError.addEventListener("click", drinkNameErrorRemover);
         })
 };
@@ -244,7 +244,7 @@ var displayDrinkNameResults = function (drinkName, data) {
         drinkNameRecipe.appendChild(drinkNameIngredientsListEl);
         drinkNameResultsContainer.appendChild(drinkNameRecipe);
     });
-
+}
 var drinkNameHandler = function (event) {  //submission handler for search by drink name
     // prevent page from refreshing on submission
     event.preventDefault();
