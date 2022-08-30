@@ -210,6 +210,21 @@ var nonalcoholicButtonEl = document.getElementById("non-alcoholic-search-button"
 let nonalcohalicDrink = [];
 // console.log(nonalcoholicBarEl);
 
+var formSubmitHandler = function (event) {
+    // stop page refresh
+    event.preventDefault();
+
+    // get a value from the input
+    var nonalcoholicName = nonalcoholicInputEl.value.trim();
+
+    if (nonalcoholicName) {
+        nonalcoholicNameInfo(nonalcoholicname);
+
+        // clear old content
+        nonalcoholicInputEl.value = "";
+    }
+}
+
 var getNonalcoholicNameInfo = function(nonalcoholicName) {
     fetch('http://https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' + nonalcohalicDrink + "")
     .then(function(response){
@@ -236,8 +251,8 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
             })
         } 
         localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
-    })}
-
+    });
+};
     displayNonalcoholicDrinkNameResults = function(nonalcoholicdrinkName, data) {
         var nonalcoholicNameResultsContainer = document.querySelector("#non-alcoholic-results-container");
         var nonalcoholicNameImageEl = document.querySelector(".non-alcoholic-image-container");
@@ -252,5 +267,7 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
         nonalcoholicNameImageEl.append(nonalcoholicNameImage);
         nonalcoholicNameImageEl.innerHTML = "<img src='" + data.nonalcoholic[0].strDrinkThumb + "/preview' alt='image of " + nonalcoholicName + "'>";
     }
+
+    
 // var drinkNameErrorRemoval = document.getElementById("remove-error");
-// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover);
+// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
