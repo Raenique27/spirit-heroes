@@ -20,7 +20,7 @@ var ingredientInfo = function(ingredient) {
     })
     .then(function(data) {
         console.log(data);
-        showingredients(data, ingredient);
+        showingredients(ingredient, data);
         //local storage
         var savedIngredients = JSON.parse(localStorage.getItem("ingredient name"));
         if (!savedIngredients) //if its not in storage, add to storage
@@ -59,23 +59,21 @@ var ingredientInfo = function(ingredient) {
 ingredientInfo();
 
 var showingredients = function(ingredient, data) {
+
     var ingredientResultsContainer = document.querySelector("#ingredient-name-results-container")
     var drinkImageEl = document.querySelector("#ingredient-image");
-    var drinkResultsEl = document.querySelector(".drink-name-results");
+    //var drinkResultsEl = document.querySelector(".drink-name-results");
     var ingredientRecipe = document.querySelector("#ingredient-recipe");
-
     drinkResultsHeader = document.createElement("h4");
     ingredientResultsContainer.appendChild(drinkResultsHeader);
     drinkResultsHeader.innerHTML = "<h4 id='ingredient-image-title' class='drink-name'>" + ingredient + "</h4>";
-
     var ingredientImage = document.createElement("img");
     drinkImageEl.append(ingredientImage);
     drinkImageEl.innerHTML = "<img src='"+ data.ingredients[0].strDrinkThumb + "/preview' alt='image of " + ingredient + "'>";
-
     var drinkIngredientsListEl = document.createElement("ul");
     drinkResultsEl.append(drinkIngredientsListEl);
     drinkIngredientsListEl.textContent = "Ingredients:"
-    //drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
+    drinkIngredientsListEl.setAttribute("data-ingredients", data.ingredients[0]);
 
     var ingredientButton = document.getElementById("ingredient-button");
     var drinkNameSection = document.getElementById("ingredients");
@@ -89,7 +87,7 @@ var ingredientNameHandler = function(event) {  //submission handler for search b
     var ingredient = ingredientInputEl.value.trim().toLowerCase();
     console.log(ingredient)
     if (ingredient !== null || ingredient !== "") { // if drinkName is properly entered
-        getDrinkNameInfo(ingredient);
+        getDrinkingredientInfo(ingredient);
     } 
     if ( ingredient === null || ingredient === "") { // if drinkName is not properly entered
         return;
