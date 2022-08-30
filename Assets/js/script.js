@@ -2,6 +2,7 @@
 var ingredientFormEl = document.getElementById("ingredient-form");
 var ingredientInputEl = document.querySelector("#ingredient-input");
 var ingredientButton = document.getElementById("ingredient-button");
+var drinkNameSection = document.getElementById("drink-name");
 
 var formSubmitHandler = function (event) {
     // stop page refresh
@@ -45,36 +46,71 @@ var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
 
-var getDrinkNameInfo = function (drinkName) { //api call for drink name
-    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName + "")
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            displayDrinkNameResults(drinkName, data);
-            // save drinkName to localstorage
-            var savedDrinkNames = JSON.parse(localStorage.getItem("drink names")); // load saves to compare existing values w/ values yet to exist
-            if (!savedDrinkNames)
-                savedDrinkNames = []; // if the value is not in storage, add it to the array for storage
-            var alreadyinStorage = false;
-            savedDrinkNames.forEach(function (item) {
-                var name = item.name;
-                if (name === drinkName) {
-                    alreadyinStorage = true;
-                }
-            });
-            // if there isn't a match 
-            if (!alreadyinStorage) { // if the value is not already in storage: 
-                //add to storage
-                savedDrinkNames.push({
-                    name: drinkName // we're only saving names to storage. we'll make an api call each time for the values stored in localstorage that are going to be entered into the dropdown menu for search bar 
-                });
+var getDrinkNameInfo = function(drinkName) { //api call for drink name
+    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
+    .then(function(response) {
+        if (response.ok) {
+        return response.json();
+        }
+        if (!response.ok) {
+            var error = response.status;
+            return Promise.reject(error);
+        }
+        
+    })
+    .then(function(data)  {
+        console.log(data);
+        displayDrinkNameResults(drinkName, data);
+        // save drinkName to localstorage
+        var savedDrinkNames = JSON.parse(localStorage.getItem("drink names")); // load saves to compare existing values w/ values yet to exist
+        if (!savedDrinkNames)
+            savedDrinkNames = []; // if the value is not in storage, add it to the array for storage
+        var alreadyinStorage = false;
+        savedDrinkNames.forEach(function(item) {
+            var name = item.name;
+            if (name === drinkName) {
+                alreadyinStorage = true;
             }
-            localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
-        })
+        });
+        // if there isn't a match 
+        if (!alreadyinStorage) { // if the value is not already in storage: 
+            //add to storage
+            savedDrinkNames.push({
+                name: drinkName // we're only saving names to storage. we'll make an api call each time for the values stored in localstorage that are going to be entered into the dropdown menu for search bar 
+            });
+        } 
+        localStorage.setItem("drink names", JSON.stringify(savedDrinkNames));
+    
 
+    })
+    .catch(function() {
+        var nameSubmitContainer = document.getElementById("name-submit-container");
+        var nameErrorText = document.createElement("p");
+        nameErrorText.textContent = "Error: Failed to fetch info from database";
+        nameErrorText.className = "error-handling";
+        nameErrorText.id = "error-text"
+        nameSubmitContainer.append(nameErrorText);
+        
+        var removeError = document.createElement("button");
+        removeError.textContent = "Remove Error";
+        removeError.setAttribute("remove", removeError);
+        removeError.className = "alert button";
+        removeError.id = "remove-error";
+        nameSubmitContainer.append(removeError);
+
+        
+        removeError.addEventListener("click", drinkNameErrorRemover);
+    })
 };
+
+var drinkNameErrorRemover = function() {
+    var nameErrorText = document.getElementById("error-text");
+    nameErrorText.remove();
+
+    var nameErrorButton = document.getElementById("remove-error");
+    nameErrorButton.remove();
+   
+}
 
 var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameResultsContainer = document.querySelector("#drink-name-results-container")
@@ -162,3 +198,6 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
 }
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
+
+// var drinkNameErrorRemoval = document.getElementById("remove-error");
+// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover);
