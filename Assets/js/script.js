@@ -97,10 +97,12 @@ var ingredientNameHandler = function(event) {  //submission handler for search b
 ingredientButton.addEventListener("click", ingredientNameHandler)
 
 
+
 // Search by drink name section
 var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
+
 
 
 var getDrinkNameInfo = function (drinkName) { //api call for drink name
@@ -140,22 +142,22 @@ var getDrinkNameInfo = function (drinkName) { //api call for drink name
 
 
         })
-        .catch(function() {
+        .catch(function () {
             var nameSubmitContainer = document.getElementById("name-submit-container");
             var nameErrorText = document.createElement("p");
             nameErrorText.textContent = "Error: Failed to fetch info from database";
             nameErrorText.className = "error-handling";
             nameErrorText.id = "error-text"
             nameSubmitContainer.append(nameErrorText);
-            
+
             var removeError = document.createElement("button");
             removeError.textContent = "Remove Error";
             removeError.setAttribute("remove", removeError);
             removeError.className = "alert button";
             removeError.id = "remove-error";
             nameSubmitContainer.append(removeError);
-    
-            
+
+
             removeError.addEventListener("click", drinkNameErrorRemover);
         })
 };
@@ -163,8 +165,10 @@ var getDrinkNameInfo = function (drinkName) { //api call for drink name
 var drinkNameErrorRemover = function () {
     var nameErrorText = document.getElementById("error-text");
     nameErrorText.remove();
+
     var nameErrorButton = document.getElementById("remove-error");
     nameErrorButton.remove();
+
 }
 
 var displayDrinkNameResults = function (drinkName, data) {
@@ -172,13 +176,34 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
     var drinkNameResultsEl = document.querySelector(".drink-name-results");
     var drinkNameRecipe = document.querySelector("#drink-name-recipe");
+    var drinkNameImageDiv = document.querySelector("#drink-name-image")
+    
+
+    var drinkNameResultsHeader = document.createElement("h4");
+    drinkNameRecipe.appendChild(drinkNameResultsHeader);
+    drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
+    drinkNameResultsHeader.id = "drink-name-results-header"
+
+    drinkNameResultsContainer.appendChild(drinkNameRecipe);
+
+    var drinkNameImage = document.createElement("img");
+    drinkNameImageDiv.append(drinkNameImage);
+    drinkNameImage.src = data.drinks[0].strDrinkThumb + "/preview";
+    drinkNameImage.alt  = "image of" + drinkName + "";
+    drinkNameImage.id = "image-of-drink";
+    // drinkNameImage.innerHTML = "<img src='" + data.drinks[0].strDrinkThumb + "/preview' alt='image of " + drinkName + "'>";
 
     var drinkNameIngredientsListEl = document.createElement("ul");
     drinkNameRecipe.append(drinkNameIngredientsListEl);
     drinkNameIngredientsListEl.id = "drinkName-ingredient-list";
     drinkNameIngredientsListEl.textContent = "Ingredients:"
     drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
+
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
+
+
+
+
     var drinkDataIngredientsFinal = [];
     var drinkData = data.drinks[0];
     console.log(drinkData);
@@ -200,12 +225,14 @@ var displayDrinkNameResults = function (drinkName, data) {
         drinkData.strMeasure15 + drinkData.strIngredient15
     ];
     var filterIngredients = function () {
+
         console.log(drinkDataIngredients);
         for (let i = 0; i < drinkDataIngredients.length; i++) { // condense array to only contain objects with valid ingredients
             if (drinkDataIngredients[i] != 0){
                 drinkDataIngredientsFinal.push(drinkDataIngredients[i]);// still returning all objects instead of selected. help pls
             } 
         }
+
     }
     filterIngredients();
 
@@ -219,8 +246,11 @@ var displayDrinkNameResults = function (drinkName, data) {
         drinkNameIngredientsListEl.appendChild(ingredientsEl);
         drinkNameRecipe.appendChild(drinkNameIngredientsListEl);
         drinkNameResultsContainer.appendChild(drinkNameRecipe);
+
     });
+
 }
+
 var drinkNameHandler = function (event) {  //submission handler for search by drink name
     // prevent page from refreshing on submission
     event.preventDefault();
@@ -248,6 +278,9 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
     }
 
 }
+
+drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
+
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
 // Non-Alcoholic Search-Bar
@@ -301,7 +334,7 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
         } 
         localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
     });
-
+};
     displayNonalcoholicDrinkNameResults = function(nonalcoholicdrinkName, data) {
         var nonalcoholicNameResultsContainer = document.querySelector("#non-alcoholic-results-container");
         var nonalcoholicNameImageEl = document.querySelector(".non-alcoholic-image-container");
@@ -316,7 +349,7 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
         nonalcoholicNameImageEl.append(nonalcoholicNameImage);
         nonalcoholicNameImageEl.innerHTML = "<img src='" + data.nonalcoholic[0].strDrinkThumb + "/preview' alt='image of " + nonalcoholicName + "'>";
     }
-};
 
+    
 // var drinkNameErrorRemoval = document.getElementById("remove-error");
 // drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
