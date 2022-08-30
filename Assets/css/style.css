@@ -14,3 +14,17 @@ nav ul {
     top: 17px;
     font-size: 20px;
 }
+
+img {
+    width: 160px;
+}
+
+#drink-name-recipe ul{
+    list-style: none;
+    font-size: 10px;
+}
+
+.error-handling{
+    color: red;
+    font-style: italic;
+}
