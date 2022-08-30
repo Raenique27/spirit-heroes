@@ -121,19 +121,26 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameImageEl = document.querySelector(".drink-name-image-container");
     var drinkNameResultsEl = document.querySelector(".drink-name-results");
     var drinkNameRecipe = document.querySelector("#drink-name-recipe");
+    var drinkNameImageDiv = document.querySelector("#drink-name-image")
+    
 
     var drinkNameResultsHeader = document.createElement("h4");
     drinkNameRecipe.appendChild(drinkNameResultsHeader);
     drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
+    drinkNameResultsHeader.id = "drink-name-results-header"
 
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
 
     var drinkNameImage = document.createElement("img");
-    drinkNameImageEl.append(drinkNameImage);
-    drinkNameImageEl.innerHTML = "<img src='" + data.drinks[0].strDrinkThumb + "/preview' alt='image of " + drinkName + "'>";
+    drinkNameImageDiv.append(drinkNameImage);
+    drinkNameImage.src = data.drinks[0].strDrinkThumb + "/preview";
+    drinkNameImage.alt  = "image of" + drinkName + "";
+    drinkNameImage.id = "image-of-drink";
+    // drinkNameImage.innerHTML = "<img src='" + data.drinks[0].strDrinkThumb + "/preview' alt='image of " + drinkName + "'>";
 
     var drinkNameIngredientsListEl = document.createElement("ul");
     drinkNameRecipe.append(drinkNameIngredientsListEl);
+    drinkNameIngredientsListEl.id = "drinkName-ingredient-list";
     drinkNameIngredientsListEl.textContent = "Ingredients:"
     drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
 
@@ -199,11 +206,21 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
         getDrinkNameInfo(drinkName);
         drinkNameInputEl.value = "";
     }
-    else if (drinkName === null || drinkName === "") { // if drinkName is not properly entered
+    if (drinkName === null || drinkName === "") { // if drinkName is not properly entered
         return;
         // create a modal for error
     }
+    var drinkNameResultsHeader = document.getElementById("drink-name-results-header")
+    var drinkNameImage = document.querySelector("#image-of-drink");
+    var drinkNameIngredientsListEl = document.querySelector("#drinkName-ingredient-list");
+    if (drinkNameResultsHeader, drinkNameImage, drinkNameIngredientsListEl)  {
+        
+        drinkNameResultsHeader.remove();
 
+        drinkNameImage.remove();
+
+        drinkNameIngredientsListEl.remove();
+    }
 
 }
 
