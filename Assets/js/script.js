@@ -58,7 +58,7 @@ var showDrinkIngredients = function(drinkIngredient, data) {
     //drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
 
     var ingredientButton = document.getElementById("ingredient-button");
-    var drinkNameSection = document.getElementById("drink-name");
+    var drinkNameSection = document.getElementById("ingredients");
 
     var formSubmitHandler = function (event) {
         // stop page refresh
@@ -74,25 +74,6 @@ var showDrinkIngredients = function(drinkIngredient, data) {
             ingredientInputEl.value = "";
         }
     }
-}
-
-// api call by drink ingredien
-var drinkIngredientInfo = function (drinkIngredient) {
-    var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + drinkIngredient + "";
-
-    // make fetch request
-    fetch(apiUrl)
-        .then(function (response) {
-            console.log(response);
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            showDrinkIngredients(data, drinkIngredient);
-        })
-}
-var showDrinkIngredients = function (ingredients) {
-    console.log(ingredients);
 }
 //showDrinkIngredients();
 
@@ -110,13 +91,17 @@ var ingredientNameHandler = function(event) {  //submission handler for search b
         // create a modal for error
     }
 }
+ingredientButton.addEventListener("click", ingredientNameHandler)
+
+
+
 
 // Search by drink name section
 var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
 var getDrinkNameInfo = function(drinkName) { //api call for drink name
-    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
     .then(function(response) {
         if (response.ok) {
         return response.json();
