@@ -79,23 +79,8 @@ var showingredients = function(ingredient, data) {
 
     var ingredientButton = document.getElementById("ingredient-button");
     var drinkNameSection = document.getElementById("ingredients");
-
-    var formSubmitHandler = function (event) {
-        // stop page refresh
-        event.preventDefault();
-
-        // get a value from the input
-        var ingredient = ingredientInputEl.value.trim();
-
-        if (ingredient) {
-            ingredientInfo(ingredient);
-
-            // clear old content
-            ingredientInputEl.value = "";
-        }
-    }
+    ingredientButton.addEventListener("click", ingredientNameHandler)
 }
-//showingredients();
 
 var ingredientNameHandler = function(event) {  //submission handler for search by ingredient name
     // prevent page from refreshing
@@ -112,8 +97,6 @@ var ingredientNameHandler = function(event) {  //submission handler for search b
     }
 }
 ingredientButton.addEventListener("click", ingredientNameHandler)
-
-
 
 
 // Search by drink name section
