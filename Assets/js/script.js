@@ -47,7 +47,7 @@ var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
 
 var getDrinkNameInfo = function(drinkName) { //api call for drink name
-    fetch("https:/www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName  + "")
     .then(function(response) {
         if (response.ok) {
         return response.json();
