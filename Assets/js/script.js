@@ -4,18 +4,23 @@ var ingredientInputEl = document.querySelector("#ingredient-input");
 var ingredientButton = document.getElementById("ingredient-name-button");
 
 // api call by drink ingredien
-var drinkIngredientInfo = function(ingredient) { 
+var ingredientInfo = function(ingredient) { 
     var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + ingredient  + "";
   
     // make fetch request
     fetch(apiUrl)
     .then(function(response) {
-        console.log(response);
-        return response.json();
+        if (response.ok) {
+            return response.json();
+        }
+        if (!response.ok) {
+            var error = response.status;
+            return Promise.reject(error);
+        }
     })
     .then(function(data) {
         console.log(data);
-        showDrinkIngredients(data, drinkIngredient);
+        showingredients(data, ingredient);
         //local storage
         var savedIngredients = JSON.parse(localStorage.getItem("ingredient name"));
         if (!savedIngredients) //if its not in storage, add to storage
@@ -23,38 +28,53 @@ var drinkIngredientInfo = function(ingredient) {
         var inStorage = false;
         savedIngredients.forEach(function(item) {
             var ingredient = item.ingredient;
-            if (ingredient === drinkIngredient) {
+            if (ingredient === ingredient) {
                 inStorage = true;
             }
         });
         //if nothing matches
         if (!inStorage) {
             savedIngredients.push({
-                ingredientName: drinkIngredient
+                ingredientName: ingredient
             });
         }
         localStorage.setItem("ingredient names", JSON.stringify(savedIngredients));
     })
+    .catch(function() {
+        var ingredientSubmitContainer = document.getElementById("name-submit-container");
+        var ingredientErrorText = document.createElement("p");
+        ingredientErrorText.textContent = "Error: Failed to fetch info from database";
+        ingredientErrorText.className = "error-handling";
+        ingredientErrorText.id = "error-text"
+        ingredientSubmitContainer.append(ingredientErrorText);
+        var removeError = document.createElement("button");
+        removeError.textContent = "Remove Error";
+        removeError.setAttribute("remove", removeError);
+        removeError.className = "alert button";
+        removeError.id = "remove-error";
+        ingredientSubmitContainer.append(removeError);
+        removeError.addEventListener("click", drinkNameErrorRemover);
+    })
 }
-drinkIngredientInfo();
+ingredientInfo();
 
-var showDrinkIngredients = function(drinkIngredient, data) {
+var showingredients = function(ingredient, data) {
     var ingredientResultsContainer = document.querySelector("#ingredient-name-results-container")
     var drinkImageEl = document.querySelector("#ingredient-image");
     var drinkResultsEl = document.querySelector(".drink-name-results");
     var ingredientRecipe = document.querySelector("#ingredient-recipe");
 
     drinkResultsHeader = document.createElement("h4");
-    ingredientResultsContainer.append(drinkResultsHeader);
-    drinkResultsHeader.innerHTML = "<h4 id='ingredient-image' class='drink-name-headers'>" + drinkIngredient + "</h4>";
+    ingredientResultsContainer.appendChild(drinkResultsHeader);
+    drinkResultsHeader.innerHTML = "<h4 id='ingredient-image-title' class='drink-name'>" + ingredient + "</h4>";
 
-    var drinkIngredientImage = document.createElement("img");
-    drinkImageEl.append(drinkIngredientImage);
-    drinkImageEl.innerHTML = "<img src='"+ data.ingredients[0].strDrinkThumb + "/preview' alt='image of " + drinkIngredient + "'>";
+    var ingredientImage = document.createElement("img");
+    drinkImageEl.append(ingredientImage);
+    drinkImageEl.innerHTML = "<img src='"+ data.ingredients[0].strDrinkThumb + "/preview' alt='image of " + ingredient + "'>";
 
-    var drinkNameIngredientsListEl = document.createElement("ul");
-    drinkResultsEl.append(drinkNameIngredientsListEl);
-    drinkNameIngredientsListEl.textContent = "Ingredients:"
+    var drinkIngredientsListEl = document.createElement("ul");
+    drinkResultsEl.append(drinkIngredientsListEl);
+    drinkIngredientsListEl.textContent = "Ingredients:"
     //drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
 
     var ingredientButton = document.getElementById("ingredient-button");
@@ -68,25 +88,25 @@ var showDrinkIngredients = function(drinkIngredient, data) {
         var ingredient = ingredientInputEl.value.trim();
 
         if (ingredient) {
-            drinkIngredientInfo(ingredient);
+            ingredientInfo(ingredient);
 
             // clear old content
             ingredientInputEl.value = "";
         }
     }
 }
-//showDrinkIngredients();
+//showingredients();
 
 var ingredientNameHandler = function(event) {  //submission handler for search by ingredient name
     // prevent page from refreshing
     event.preventDefault();
     // get value from input
-    var drinkIngredient = ingredientInputEl.value.trim().toLowerCase();
-    console.log(drinkIngredient)
-    if (drinkIngredient !== null || drinkIngredient !== "") { // if drinkName is properly entered
-        getDrinkNameInfo(drinkIngredient);
+    var ingredient = ingredientInputEl.value.trim().toLowerCase();
+    console.log(ingredient)
+    if (ingredient !== null || ingredient !== "") { // if drinkName is properly entered
+        getDrinkNameInfo(ingredient);
     } 
-    if ( drinkIngredient === null || drinkIngredient === "") { // if drinkName is not properly entered
+    if ( ingredient === null || ingredient === "") { // if drinkName is not properly entered
         return;
         // create a modal for error
     }
