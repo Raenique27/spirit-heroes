@@ -199,7 +199,6 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
-<<<<<<< HEAD
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
 // Non-Alcoholic Search-Bar
@@ -237,7 +236,7 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
             })
         } 
         localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
-    })
+    })}
 
     displayNonalcoholicDrinkNameResults = function(nonalcoholicdrinkName, data) {
         var nonalcoholicNameResultsContainer = document.querySelector("#non-alcoholic-results-container");
@@ -253,7 +252,5 @@ var getNonalcoholicNameInfo = function(nonalcoholicName) {
         nonalcoholicNameImageEl.append(nonalcoholicNameImage);
         nonalcoholicNameImageEl.innerHTML = "<img src='" + data.nonalcoholic[0].strDrinkThumb + "/preview' alt='image of " + nonalcoholicName + "'>";
     }
-=======
 // var drinkNameErrorRemoval = document.getElementById("remove-error");
 // drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover);
->>>>>>> 20c3393a0a0ca0cd183912775b5f4214a67aa2c6
