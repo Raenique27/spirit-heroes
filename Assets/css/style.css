@@ -58,12 +58,12 @@ footer {
 
 #drink-name-button,
 #non-alcoholic-button,
-#drink-ingredient-buttom {
+#drink-ingredient-button {
     background-color: rgb(51, 173, 213);
     color: lightgoldenrodyellow;
 }
 
-#drink-ingredient-buttom:hover,
+#drink-ingredient-button:hover,
 #non-alcoholic-button:hover,
 #drink-name-button:hover {
     background: linear-gradient(to bottom left, #0099cc 6%, #00ff99 115%);
@@ -80,7 +80,7 @@ footer {
 }
 
 #drink-name-recipe,
-#ingredient-recipe, 
+#ingredient-drinks, 
 #non-alcoholic-recipe{
     border: 1px;
     background-color: #fbf8f8;
@@ -88,7 +88,7 @@ footer {
 }
 
 #drink-name-submission,
-#ingredient-submission,
+#ingredient-input,
 #non-alcoholic-search-bar {
     background-color: #fdfdf1;
 }

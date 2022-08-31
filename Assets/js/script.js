@@ -97,7 +97,9 @@ var displayIngredientResults = function (ingredient, data) {
 
     var ingredientImage = document.createElement("img");
     ingredientImageDiv.append(ingredientImage);
-    ingredientImage.src = "https://www.thecocktaildb.com/images/ingredients/" + ingredient + "-medium.png";
+
+    ingredientImage.src = "https://www.thecocktaildb.com/images/ingredients/" + ingredient + "-Medium.png";
+
     ingredientImage.alt = "image of" + ingredient + "";
     ingredientImage.id = "image-of-ingredient";
 
