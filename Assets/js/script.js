@@ -1,102 +1,6 @@
 // search by ingredient section
 var ingredientFormEl = document.getElementById("ingredient-form");
 var ingredientInputEl = document.querySelector("#ingredient-input");
-<<<<<<< HEAD
-var ingredientButton = document.getElementById("ingredient-name-button");
-
-// api call by drink ingredien
-var ingredientInfo = function(ingredient) { 
-    var apiUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?i=" + ingredient  + "";
-
-    // make fetch request
-    fetch(apiUrl)
-    .then(function(response) {
-        if (response.ok) {
-            return response.json();
-        }
-        if (!response.ok) {
-            var error = response.status;
-            return Promise.reject(error);
-        }
-    })
-    .then(function(data) {
-        console.log(data);
-        showingredients(ingredient, data);
-        //local storage
-        var savedIngredients = JSON.parse(localStorage.getItem("ingredient name"));
-        if (!savedIngredients) //if its not in storage, add to storage
-            savedIngredients = [];
-        var inStorage = false;
-        savedIngredients.forEach(function(item) {
-            var ingredient = item.ingredient;
-            if (ingredient === ingredient) {
-                inStorage = true;
-            }
-        });
-        //if nothing matches
-        if (!inStorage) {
-            savedIngredients.push({
-                ingredientName: ingredient
-            });
-        }
-        localStorage.setItem("ingredient names", JSON.stringify(savedIngredients));
-    })
-    .catch(function() {
-        var ingredientSubmitContainer = document.getElementById("name-submit-container");
-        var ingredientErrorText = document.createElement("p");
-        ingredientErrorText.textContent = "Error: Failed to fetch info from database";
-        ingredientErrorText.className = "error-handling";
-        ingredientErrorText.id = "error-text"
-        ingredientSubmitContainer.append(ingredientErrorText);
-        var removeError = document.createElement("button");
-        removeError.textContent = "Remove Error";
-        removeError.setAttribute("remove", removeError);
-        removeError.className = "alert button";
-        removeError.id = "remove-error";
-        ingredientSubmitContainer.append(removeError);
-        removeError.addEventListener("click", drinkNameErrorRemover);
-    })
-}
-ingredientInfo();
-
-var showingredients = function(ingredient, data) {
-
-    var ingredientResultsContainer = document.querySelector("#ingredient-name-results-container")
-    var drinkImageEl = document.querySelector("#ingredient-image");
-    //var drinkResultsEl = document.querySelector(".drink-name-results");
-    var ingredientRecipe = document.querySelector("#ingredient-recipe");
-    drinkResultsHeader = document.createElement("h4");
-    ingredientResultsContainer.appendChild(drinkResultsHeader);
-    drinkResultsHeader.innerHTML = "<h4 id='ingredient-image-title' class='drink-name'>" + ingredient + "</h4>";
-    var ingredientImage = document.createElement("img");
-    drinkImageEl.append(ingredientImage);
-    drinkImageEl.innerHTML = "<img src='"+ data.ingredients[0].strDrinkThumb + "/preview' alt='image of " + ingredient + "'>";
-    var drinkIngredientsListEl = document.createElement("ul");
-    drinkResultsEl.append(drinkIngredientsListEl);
-    drinkIngredientsListEl.textContent = "Ingredients:"
-    drinkIngredientsListEl.setAttribute("data-ingredients", data.ingredients[0]);
-
-    var ingredientButton = document.getElementById("ingredient-button");
-    var drinkNameSection = document.getElementById("ingredients");
-    ingredientButton.addEventListener("click", ingredientNameHandler)
-}
-
-var ingredientNameHandler = function(event) {  //submission handler for search by ingredient name
-    // prevent page from refreshing
-    event.preventDefault();
-    // get value from input
-    var ingredient = ingredientInputEl.value.trim().toLowerCase();
-    console.log(ingredient)
-    if (ingredient !== null || ingredient !== "") { // if drinkName is properly entered
-        getDrinkingredientInfo(ingredient);
-    } 
-    if ( ingredient === null || ingredient === "") { // if drinkName is not properly entered
-        return;
-        // create a modal for error
-    }
-}
-ingredientButton.addEventListener("click", ingredientNameHandler)
-=======
 var ingredientSearchButton = document.getElementById("drink-ingredient-button");
 
 
@@ -159,7 +63,6 @@ var drinkIngredientInfo = function (ingredient) {
 var ingredientErrorRemover = function() {
     var ingredientErrorText = document.getElementById("ingredient-error-text");
     ingredientErrorText.remove();
->>>>>>> 8196d9d6af36cfc22bade0df30eac175d791a345
 
     var ingredientErrorButton = document.getElementById("remove-ingredient-error");
     ingredientErrorButton.remove();
@@ -428,76 +331,5 @@ var errorModal = document.getElementById("error-modal");
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
-<<<<<<< HEAD
-drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
-
-// Non-Alcoholic Search-Bar
-
-var nonalcoholicNameEl = document.getElementById("non-alcoholic-form");
-var nonalcoholicInputEl = document.querySelector("#non-alcoholic-name-submission"); 
-var nonalcoholicBarEl = document.getElementById("non-alcoholic-search-bar");
-var nonalcoholicButtonEl = document.getElementById("non-alcoholic-search-button");
-let nonalcohalicDrink = [];
-// console.log(nonalcoholicBarEl);
-
-var formSubmitHandler = function (event) {
-    // stop page refresh
-    event.preventDefault();
-
-    // get a value from the input
-    var nonalcoholicName = nonalcoholicInputEl.value.trim();
-
-    if (nonalcoholicName) {
-        nonalcoholicNameInfo(nonalcoholicname);
-
-        // clear old content
-        nonalcoholicInputEl.value = "";
-    }
-}
-
-var getNonalcoholicNameInfo = function(nonalcoholicName) {
-    fetch('http://https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' + nonalcohalicDrink + "")
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(data) {
-        console.log(data);
-        displayNonalcoholicNameResults(nonalcoholicName, data);
-        //save nonalcoholicdrinkName to local storage
-        var savednonalcoholicNames = JSON.parse(localStorage.getItem("non-alcoholic drink names")); // load saves
-        if (!savednonalcoholicNames) 
-        savednonalcoholicNames = [];
-        var alreadyinStorage = false;
-        savednonalcoholicNames.forEach(function(item){
-            var name = item.name;
-            if (name === nonalcoholicName) {
-                alreadyinStorage = true;
-            }
-        });
-        // no match
-        if(!alreadyinStorage) {
-            savednonalcoholicNames.push({
-                name: nonalcoholicName 
-            })
-        } 
-        localStorage.setItem("non-alcoholic drink names", JSON.stringify(savednonalcoholicDrinkNames));
-    });
-};
-    displayNonalcoholicDrinkNameResults = function(nonalcoholicdrinkName, data) {
-        var nonalcoholicNameResultsContainer = document.querySelector("#non-alcoholic-results-container");
-        var nonalcoholicNameImageEl = document.querySelector(".non-alcoholic-image-container");
-        var nonalcohalicNameResultsEl = document.querySelector(".non-alcoholic-results");
-        var nonalcoholicNameRecipe = document.querySelector("#non-alcoholic-recipe");
-
-        var nonalcoholicNameResultsHeader = document.createElement("h4");
-        nonalcohalicNameResultsEl.append(nonalcoholicNameResultsHeader);
-        nonalcoholicNameResultsHeader.innerHTML = "<h4 'non-alcoholic-name-image-header' class='non-alcoholic-name-headers'>" + nonalcoholicName + "</h4>";
-
-        var nonalcoholicNameImage = document.createElement("img");
-        nonalcoholicNameImageEl.append(nonalcoholicNameImage);
-        nonalcoholicNameImageEl.innerHTML = "<img src='" + data.nonalcoholic[0].strDrinkThumb + "/preview' alt='image of " + nonalcoholicName + "'>";
-    }
-
-    
-// var drinkNameErrorRemoval = document.getElementById("remove-error");
-// drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
+// // var drinkNameErrorRemoval = document.getElementById("remove-error");
+// // drinkNameErrorRemoval.addEventListener("click", drinkNameErrorRemover)
