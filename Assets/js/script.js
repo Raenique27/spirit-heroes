@@ -101,6 +101,7 @@ var displayIngredientResults = function (ingredient, data) {
     ingredientImage.alt = "image of" + ingredient + "";
     ingredientImage.id = "image-of-ingredient";
 
+    
 }
 
 ingredientSearchButton.addEventListener("click", ingredientFormHandler);
