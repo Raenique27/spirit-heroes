@@ -231,7 +231,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameResultsHeader = document.createElement("h4");
     drinkNameRecipe.appendChild(drinkNameResultsHeader);
     drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
-    drinkNameResultsHeader.id = "drink-name-results-header"
+    drinkNameResultsHeader.id = "drink-name-results-header";
 
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
 
