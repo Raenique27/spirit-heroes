@@ -55,18 +55,18 @@
 
         <section id="ingredients" class="grid-x grid-padding-x">
             <div class="cell small-12 flex-container large-flex-dir-row">
-                <div class="ingredients-form callout flex-child-auto">
+                <div class="ingredients-form callout flex-child-auto" id="ingredient-submit-container">
                     <h2 class="subtitle-2"><span id="ingredients-header"></span></h2>
-                    <form>
-                        <input type="text" placeholder="Search by Ingredient" id="ingredient-submission">
-                        <button id="drink-ingredient-buttom" type="submit" name="ingredients-search-button" class="submit success button">Search</button>
+                    <form id="ingredient-form">
+                        <input type="text" placeholder="Search by Ingredient" id="ingredient-input">
+                        <button id="drink-ingredient-button" type="submit" name="ingredients-search-button" class="submit success button">Search</button>
                     </form>
                 </div>
                 <div class="ingredients-results callout flex-child-auto" style="width:55%;">
                     <div class="grid-x grid-padding-x align-center text-center">
-                        <div class="cell small-4 flex-container flex-dir-row" style="height:200px; width:100%;">
+                        <div id="ingredient-results-container"class="cell small-4 flex-container flex-dir-row" style="height:200px; width:100%;">
                             <div id="ingredient-image" class="callout flex-child-auto"></div>
-                            <div id="ingredient-recipe" class="callout flex-child-auto"></div>
+                            <div id="ingredient-drinks" class="callout flex-child-auto"></div>
                         </div>
                     </div>
                 </div>
@@ -75,10 +75,10 @@
 
         <section id="non-alcoholic" class="grid-x grid-padding-x">
             <div class="cell small-12 flex-container large-flex-dir-row">
-                <div class="non-aloholic-form callout flex-child-auto">
+                <div class="non-aloholic-form callout flex-child-auto" id = "non-alcoholic-name-container">
                     <h2 class="subtitle-3"><span id="non-alcoholic-header"></span></h2>
                     <form id="non-alcoholic-form">
-                        <input id="non-alcoholic-search-bar" type="text" placeholder="Search Non-Alcoholic">
+                        <input id="non-alcoholic-input" type="text" placeholder="Search Non-Alcoholic">
                         <button id="non-alcoholic-button" type="submit" name="non-alcoholic-search-button" class="submit success button">Search</button>
                     </form>
                 </div>
