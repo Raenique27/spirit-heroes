@@ -223,7 +223,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameResultsHeader = document.createElement("h4");
     drinkNameRecipe.appendChild(drinkNameResultsHeader);
     drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
-    drinkNameResultsHeader.id = "drink-name-results-header"
+    drinkNameResultsHeader.id = "drink-name-results-header";
 
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
 
@@ -298,13 +298,23 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
     // get value from input element
     var drinkName = drinkNameInputEl.value.trim();
     console.log(drinkName)
+    if (drinkName === null || drinkName === "") { // if drinkName is not properly entered
+        var errorModal = document.getElementById("error-modal");
+        errorModal.style.display = "block";
+        var closeModal = document.getElementsByClassName("close")[0];
+        closeModal.onclick = function() {
+            errorModal.style.display = "none";
+        }
+        window.onclick  = function (event) {
+            if (event.target == errorModal) {
+                errorModal.style.display = "none";
+            }
+        }
+        return;
+    }
     if (drinkName !== null || drinkName !== "") { // if drinkName is properly entered
         getDrinkNameInfo(drinkName);
         drinkNameInputEl.value = "";
-    }
-    if (drinkName === null || drinkName === "") { // if drinkName is not properly entered
-        return;
-        // create a modal for error
     }
     var drinkNameResultsHeader = document.getElementById("drink-name-results-header")
     var drinkNameImage = document.querySelector("#image-of-drink");
@@ -319,6 +329,8 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
     }
 
 }
+var errorModal = document.getElementById("error-modal");
+
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
