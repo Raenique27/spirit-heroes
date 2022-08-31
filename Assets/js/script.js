@@ -1,6 +1,7 @@
 // search by ingredient section
 var ingredientFormEl = document.getElementById("ingredient-form");
 var ingredientInputEl = document.querySelector("#ingredient-input");
+<<<<<<< HEAD
 var ingredientButton = document.getElementById("ingredient-name-button");
 
 // api call by drink ingredien
@@ -95,15 +96,152 @@ var ingredientNameHandler = function(event) {  //submission handler for search b
     }
 }
 ingredientButton.addEventListener("click", ingredientNameHandler)
+=======
+var ingredientSearchButton = document.getElementById("drink-ingredient-button");
 
+var ingredientFormHandler = function (event) { // handler for submitted ingredient
+    // stop page refresh
+    event.preventDefault();
+
+    // get a value from the input
+    var ingredient = ingredientInputEl.value.trim().toLowerCase();
+    console.log(ingredient);
+    if (ingredient) {
+        drinkIngredientInfo(ingredient);
+
+        // clear old content
+        ingredientInputEl.value = "";
+    }
+    
+    
+    var ingredientDrinkRandom = document.querySelector("#ingredient-drink-random");
+    var ingredientDrinkImage = document.querySelector("#ingredient-drink-image");
+    if (ingredientDrinkRandom, ingredientDrinkImage)  {
+        
+        ingredientDrinkRandom.delete();
+
+        ingredientDrinkImage.delete();
+    }
+}
+
+// api call by drink ingredient
+var drinkIngredientInfo = function (ingredient) {
+    // make fetch request
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + ingredient + "")
+        .then(function (response) {
+            if (response.ok) {
+            console.log(response);
+            return response.json();
+            }
+            if (!response.ok) {
+                var error = response.status;
+                return Promise.reject(error);
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            displayIngredientResults(ingredient, data);
+            // save ingredient to local storage
+            var savedIngredients = JSON.parse(localStorage.getItem("ingredients"));
+            if (!savedIngredients)
+                savedIngredients = []; // if not in storage, add to array for storage
+            var alreadyinStorage = false;
+            savedIngredients.forEach(function(item) {
+                var name = item.name;
+                if (name === ingredient) {
+                    alreadyinStorage = true;
+                }
+            });
+            // if no match
+            if (!alreadyinStorage) {
+                // add to storage
+                savedIngredients.push({
+                    name: ingredient
+                });
+            }
+            localStorage.setItem("ingredients", JSON.stringify(savedIngredients));
+        })
+        .catch(function() {
+            var ingredientSubmitContainer = document.getElementById("ingredient-submit-container");
+            var ingredientErrorText = document.createElement("p");
+            ingredientErrorText.textContent = "Error: Failed to fetch some info from database";
+            ingredientErrorText.className = "error-handling";
+            ingredientErrorText.id = "ingredient-error-text";
+            ingredientSubmitContainer.append(ingredientErrorText);
+
+            var removeIngredientError = document.createElement("button");
+            removeIngredientError.textContent = "Remove Error";
+            removeIngredientError.setAttribute("remove", removeIngredientError);
+            removeIngredientError.className = "alert button";
+            removeIngredientError.id = "remove-ingredient-error";
+            ingredientSubmitContainer.append(removeIngredientError);
+
+            removeIngredientError.addEventListener("click", ingredientErrorRemover)
+        });
+}
+
+var ingredientErrorRemover = function() {
+    var ingredientErrorText = document.getElementById("ingredient-error-text");
+    ingredientErrorText.remove();
+>>>>>>> 8196d9d6af36cfc22bade0df30eac175d791a345
+
+    var ingredientErrorButton = document.getElementById("remove-ingredient-error");
+    ingredientErrorButton.remove();
+}
+
+var displayIngredientResults = function (ingredient, data) {
+    console.log(ingredient);
+    var ingredientResultsContainer = document.querySelector("#ingredient-results-container");
+    var ingredientDrinks = document.querySelector("#ingredient-drinks");
+    var ingredientImageDiv = document.querySelector("#ingredient-image");
+
+    // var ingredientResultsHeader = document.createElement("h4");
+    // ingredientDrinks.append(ingredientResultsHeader);
+    // ingredientResultsHeader.innerHTML = "<h4 id='ingredient-image-header' class='ingredient-name-headers'>" + ingredient + "</h4>";
+    // ingredientResultsHeader.id = "ingredient-results-header";
+
+    // ingredientResultsContainer.append(ingredientDrinks);
+
+    for (let i= data.drinks.length -1;i > 0; i--) {
+        var j = Math.floor(Math.random() * (i+1));
+        var temp = data.drinks[i];
+        data.drinks[i] = data.drinks[j];
+        data.drinks[j] = temp;
+    }
+
+    var ingredientDrinkRandom = document.createElement("h4");
+    ingredientDrinks.appendChild(ingredientDrinkRandom);
+    ingredientDrinkRandom.id = "ingredient-drink-random";
+    ingredientDrinkRandom.textContent = data.drinks[j].strDrink;
+
+    ingredientResultsContainer.appendChild(ingredientDrinks);
+
+    var ingredientDrinkImage = document.createElement("img");
+    ingredientImageDiv.appendChild(ingredientDrinkImage);
+    ingredientDrinkImage.src = data.drinks[j].strDrinkThumb ; 
+    ingredientDrinkImage.alt = "image of " + data.drink[j].strDrink + "";
+    ingredientDrinkImage.id = "ingredient-drink-image";
+
+    ingredientResultsContainer.appendChild(ingredientImageDiv)
+
+//     var ingredientDrinkListEl2 = document.createElement("li");
+//     ingredientDrinks.append(ingredientDrinkListEl2);
+//     ingredientDrinkListEl2.id = "ingredient-drink-list-2";
+//     ingredientDrinkListEl2.textContent = data.drinks[j].strDrink;
+
+//     var ingredientDrinkListEl3 = document.createElement("li");
+//     ingredientDrinks.append(ingredientDrinkListEl3);
+//     ingredientDrinkListEl3.id = "ingredient-drink-list-3";
+//     ingredientDrinkListEl3.textContent = data.drink[j].strDrink;
+}
+
+ingredientSearchButton.addEventListener("click", ingredientFormHandler);
 
 
 // Search by drink name section
 var drinkNameFormEl = document.getElementById("drink-name-form");
 var drinkNameInputEl = document.querySelector("#drink-name-submission");
 var drinkNameButton = document.getElementById("drink-name-button");
-
-
 
 var getDrinkNameInfo = function (drinkName) { //api call for drink name
     fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName + "")
@@ -147,26 +285,26 @@ var getDrinkNameInfo = function (drinkName) { //api call for drink name
             var nameErrorText = document.createElement("p");
             nameErrorText.textContent = "Error: Failed to fetch info from database";
             nameErrorText.className = "error-handling";
-            nameErrorText.id = "error-text"
+            nameErrorText.id = "name-error-text";
             nameSubmitContainer.append(nameErrorText);
 
-            var removeError = document.createElement("button");
-            removeError.textContent = "Remove Error";
-            removeError.setAttribute("remove", removeError);
-            removeError.className = "alert button";
-            removeError.id = "remove-error";
-            nameSubmitContainer.append(removeError);
+            var removeNameError = document.createElement("button");
+            removeNameError.textContent = "Remove Error";
+            removeNameError.setAttribute("remove", removeNameError);
+            removeNameError.className = "alert button";
+            removeNameError.id = "remove-name-error";
+            nameSubmitContainer.append(removeNameError);
 
 
-            removeError.addEventListener("click", drinkNameErrorRemover);
+            removeNameError.addEventListener("click", drinkNameErrorRemover);
         })
 };
 
 var drinkNameErrorRemover = function () {
-    var nameErrorText = document.getElementById("error-text");
+    var nameErrorText = document.getElementById("name-error-text");
     nameErrorText.remove();
 
-    var nameErrorButton = document.getElementById("remove-error");
+    var nameErrorButton = document.getElementById("remove-name-error");
     nameErrorButton.remove();
 
 }
@@ -182,7 +320,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameResultsHeader = document.createElement("h4");
     drinkNameRecipe.appendChild(drinkNameResultsHeader);
     drinkNameResultsHeader.innerHTML = "<h4 id='drink-name-image-header' class='drink-name-headers'>" + drinkName + "</h4>";
-    drinkNameResultsHeader.id = "drink-name-results-header"
+    drinkNameResultsHeader.id = "drink-name-results-header";
 
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
 
@@ -196,7 +334,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameIngredientsListEl = document.createElement("ul");
     drinkNameRecipe.append(drinkNameIngredientsListEl);
     drinkNameIngredientsListEl.id = "drinkName-ingredient-list";
-    drinkNameIngredientsListEl.textContent = "Ingredients:"
+    drinkNameIngredientsListEl.textContent = "Ingredients:";
     drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
 
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
@@ -257,13 +395,23 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
     // get value from input element
     var drinkName = drinkNameInputEl.value.trim();
     console.log(drinkName)
+    if (drinkName === null || drinkName === "") { // if drinkName is not properly entered
+        var errorModal = document.getElementById("error-modal");
+        errorModal.style.display = "block";
+        var closeModal = document.getElementsByClassName("close")[0];
+        closeModal.onclick = function() {
+            errorModal.style.display = "none";
+        }
+        window.onclick  = function (event) {
+            if (event.target == errorModal) {
+                errorModal.style.display = "none";
+            }
+        }
+        return;
+    }
     if (drinkName !== null || drinkName !== "") { // if drinkName is properly entered
         getDrinkNameInfo(drinkName);
         drinkNameInputEl.value = "";
-    }
-    if (drinkName === null || drinkName === "") { // if drinkName is not properly entered
-        return;
-        // create a modal for error
     }
     var drinkNameResultsHeader = document.getElementById("drink-name-results-header")
     var drinkNameImage = document.querySelector("#image-of-drink");
@@ -278,9 +426,12 @@ var drinkNameHandler = function (event) {  //submission handler for search by dr
     }
 
 }
+var errorModal = document.getElementById("error-modal");
+
 
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
+<<<<<<< HEAD
 drinkNameButton.addEventListener("click", drinkNameHandler) // eventlistener for drink name search
 
 // Non-Alcoholic Search-Bar
