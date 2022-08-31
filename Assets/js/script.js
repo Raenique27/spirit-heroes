@@ -8,7 +8,7 @@ var ingredientFormHandler = function (event) { // handler for submitted ingredie
     event.preventDefault();
 
     // get a value from the input
-    var ingredient = ingredientInputEl.value.trim();
+    var ingredient = ingredientInputEl.value.trim().toLowerCase();
     console.log(ingredient);
     if (ingredient) {
         drinkIngredientInfo(ingredient);
@@ -34,7 +34,7 @@ var drinkIngredientInfo = function (ingredient) {
         })
         .then(function (data) {
             console.log(data);
-            displayIngredientResults(data, ingredient);
+            displayIngredientResults(ingredient, data);
             // save ingredient to local storage
             var savedIngredients = JSON.parse(localStorage.getItem("ingredients"));
             if (!savedIngredients)
@@ -97,10 +97,13 @@ var displayIngredientResults = function (ingredient, data) {
 
     var ingredientImage = document.createElement("img");
     ingredientImageDiv.append(ingredientImage);
-    ingredientImage.src = "https://www.thecocktaildb.com/images/ingredients/" + ingredient + "-Small.png";
+    ingredientImage.src = "https://www.thecocktaildb.com/images/ingredients/" + ingredient + "-medium.png";
     ingredientImage.alt = "image of" + ingredient + "";
     ingredientImage.id = "image-of-ingredient";
 
+    var ingredientDrinkListEl = document.createElement("li");
+    ingredientDrinks.append(ingredientDrinkListEl);
+    ingredientDrinkListEl.id = "ingredient-drink-list";
 }
 
 ingredientSearchButton.addEventListener("click", ingredientFormHandler);
@@ -202,7 +205,7 @@ var displayDrinkNameResults = function (drinkName, data) {
     var drinkNameIngredientsListEl = document.createElement("ul");
     drinkNameRecipe.append(drinkNameIngredientsListEl);
     drinkNameIngredientsListEl.id = "drinkName-ingredient-list";
-    drinkNameIngredientsListEl.textContent = "Ingredients:"
+    drinkNameIngredientsListEl.textContent = "Ingredients:";
     drinkNameIngredientsListEl.setAttribute("data-ingredients", data.drinks[0]);
 
     drinkNameResultsContainer.appendChild(drinkNameRecipe);
