@@ -16,6 +16,19 @@ var ingredientFormHandler = function (event) { // handler for submitted ingredie
         // clear old content
         ingredientInputEl.value = "";
     }
+    
+    
+    var ingredientDrinkRandom = document.querySelector("#ingredient-drink-random");
+    var ingredientDrinkImage = document.querySelector("#ingredient-drink-image");
+    var ingredientImage = document.querySelector("#image-of-ingredient");
+    if (ingredientDrinkRandom, ingredientDrinkImage, ingredientImage)  {
+        
+        ingredientDrinkRandom.remove();
+
+        ingredientDrinkImage.remove();
+
+        ingredientImage.remove();
+    }
 }
 
 // api call by drink ingredient
@@ -58,7 +71,7 @@ var drinkIngredientInfo = function (ingredient) {
         .catch(function() {
             var ingredientSubmitContainer = document.getElementById("ingredient-submit-container");
             var ingredientErrorText = document.createElement("p");
-            ingredientErrorText.textContent = "Error: Failed to fetch info from database";
+            ingredientErrorText.textContent = "Error: Failed to fetch some info from database";
             ingredientErrorText.className = "error-handling";
             ingredientErrorText.id = "ingredient-error-text";
             ingredientSubmitContainer.append(ingredientErrorText);
@@ -88,10 +101,10 @@ var displayIngredientResults = function (ingredient, data) {
     var ingredientDrinks = document.querySelector("#ingredient-drinks");
     var ingredientImageDiv = document.querySelector("#ingredient-image");
 
-    var ingredientResultsHeader = document.createElement("h4");
-    ingredientDrinks.append(ingredientResultsHeader);
-    ingredientResultsHeader.innerHTML = "<h4 id='ingredient-image-header' class='ingredient-name-headers'>" + ingredient + "</h4>";
-    ingredientResultsHeader.id = "ingredient-results-header";
+    // var ingredientResultsHeader = document.createElement("h4");
+    // ingredientDrinks.append(ingredientResultsHeader);
+    // ingredientResultsHeader.innerHTML = "<h4 id='ingredient-image-header' class='ingredient-name-headers'>" + ingredient + "</h4>";
+    // ingredientResultsHeader.id = "ingredient-results-header";
 
     ingredientResultsContainer.append(ingredientDrinks);
 
@@ -103,9 +116,34 @@ var displayIngredientResults = function (ingredient, data) {
     ingredientImage.alt = "image of" + ingredient + "";
     ingredientImage.id = "image-of-ingredient";
 
-    var ingredientDrinkListEl = document.createElement("li");
-    ingredientDrinks.append(ingredientDrinkListEl);
-    ingredientDrinkListEl.id = "ingredient-drink-list";
+    for (let i= data.drinks.length -1;i > 0; i--) {
+        var j = Math.floor(Math.random() * (i+1));
+        var temp = data.drinks[i];
+        data.drinks[i] = data.drinks[j];
+        data.drinks[j] = temp;
+    }
+
+    var ingredientDrinkRandom = document.createElement("h4");
+    ingredientDrinks.append(ingredientDrinkRandom);
+    ingredientDrinkRandom.id = "ingredient-drink-random";
+    ingredientDrinkRandom.textContent = data.drinks[j].strDrink;
+
+    var ingredientDrinkImage = document.createElement("img");
+    ingredientDrinks.append(ingredientDrinkImage);
+    ingredientDrinkImage.src = data.drinks[j].strDrinkThumb ; 
+    ingredientDrinkImage.alt = "image of " + data.drink[j].strDrink + "";
+    ingredientDrinkImage.id = "ingredient-drink-image";
+
+
+//     var ingredientDrinkListEl2 = document.createElement("li");
+//     ingredientDrinks.append(ingredientDrinkListEl2);
+//     ingredientDrinkListEl2.id = "ingredient-drink-list-2";
+//     ingredientDrinkListEl2.textContent = data.drinks[j].strDrink;
+
+//     var ingredientDrinkListEl3 = document.createElement("li");
+//     ingredientDrinks.append(ingredientDrinkListEl3);
+//     ingredientDrinkListEl3.id = "ingredient-drink-list-3";
+//     ingredientDrinkListEl3.textContent = data.drink[j].strDrink;
 }
 
 ingredientSearchButton.addEventListener("click", ingredientFormHandler);
