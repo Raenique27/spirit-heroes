@@ -44,7 +44,7 @@ var drinkIngredientInfo = function (ingredient) {
         .catch(function() {
             var ingredientSubmitContainer = document.getElementById("ingredient-submit-container");
             var ingredientErrorText = document.createElement("p");
-            ingredientErrorText.textContent = "Error: Failed to fetch some info from database";
+            ingredientErrorText.textContent = "Error: Failed to fetch info from database / ingredient is not valid in database";
             ingredientErrorText.className = "error-handling";
             ingredientErrorText.id = "ingredient-error-text";
             ingredientSubmitContainer.append(ingredientErrorText);
@@ -128,11 +128,13 @@ var ingredientFormHandler = function (event) { // handler for submitted ingredie
     
     var ingredientDrinkRandom = document.querySelector("#ingredient-drink-random");
     var ingredientDrinkImage = document.querySelector("#ingredient-drink-image");
+    
     if (ingredientDrinkRandom, ingredientDrinkImage)  {
         
         ingredientDrinkRandom.remove();
 
         ingredientDrinkImage.remove();
+
     }
 }
 
@@ -184,7 +186,7 @@ var getDrinkNameInfo = function (drinkName) { //api call for drink name
         .catch(function () {
             var nameSubmitContainer = document.getElementById("name-submit-container");
             var nameErrorText = document.createElement("p");
-            nameErrorText.textContent = "Error: Failed to fetch info from database";
+            nameErrorText.textContent = "Error: Failed to fetch info from database / drink is not valid in database";
             nameErrorText.className = "error-handling";
             nameErrorText.id = "name-error-text";
             nameSubmitContainer.append(nameErrorText);
